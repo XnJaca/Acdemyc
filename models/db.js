@@ -5,7 +5,7 @@ const UserModel = require('./Usuario/Usuario_model');
 /* Buscamos el archivo que habíamos creado antes. */
 const dbConfig = require("../config/db_config.js");
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,{
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,dbConfig.PORT,{
     host: dbConfig.HOST,
     dialect: 'mysql',
 });
