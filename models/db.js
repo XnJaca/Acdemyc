@@ -8,6 +8,7 @@ const dbConfig = require("../config/db_config.js");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,{
     host: dbConfig.HOST,
     dialect: 'mysql',
+    port: dbConfig.PORT
 });
 
 const User = UserModel(sequelize, Sequelize);
