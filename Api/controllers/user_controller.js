@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const Usuario = require("../models/Usuario/Usuario_model");
+// const Usuario = require("../models/Usuario/Usuario_model");
 const User = require('../models/db')
 
 // const usuariosGet = (req = request, res = response) => {
@@ -31,13 +31,34 @@ const User = require('../models/db')
 //   }
 // }
 
+const usuarioGetById = async (req = request, res = response) => {
+  const { id } = req.query;
+  const user = await User.findByPk(id);
+  if (user === null) {
+    res.json({
+      message: `No se encontro el usuario con el id \'${id}\'.`
+    });
+  } else {
+    res.json({
+      user: user,
+    },)
+    // console.log(user instanceof User); // true
+    // Its primary key is 123
+  }
+}
+
+
 const usuariosGet = async (req = request, res = response) => {
+  const { id } = req.query;
+  if (id != null) {
+    usuarioGetById(req, res)
+    return;
+  }
   const users = await User.findAll();
   console.log(users.every(user => user instanceof User)); // true
   console.log("All users:", JSON.stringify(users, null, 2));
   res.json({
     users: users,
-    
   },)
 }
 
