@@ -1,49 +1,23 @@
 const { response, request } = require('express');
 // const Usuario = require("../models/Usuario/Usuario_model");
-const User = require('../models/db')
+const models = require('../models/db')
 
-// const usuariosGet = (req = request, res = response) => {
-//   const { id } = req.query;
-
-//   if (id != null) {
-//     Usuario.getById(id, (err, data) => {
-//       if (err) {
-//         if (err.kind === "not_found") {
-//           res.status(404).send({
-//             message: `Not found Usuario with id ${id}.`
-//           });
-//         } else {
-//           res.status(500).send({
-//             message: "Error retrieving Product with id " + id
-//           });
-//         }
-//       } else res.send(data);
-//     });
-//   }else{
-//     Usuario.getAll((err, data) => {
-//       if (err)
-//         res.status(500).send({
-//           message:
-//             err.message || "Some error occurred while retrieving customers."
-//         });
-//       else res.send(data);
-//     });
-//   }
-// }
+const User = models.userModel; // Obtenemos el modelo de usuario
 
 const usuarioGetById = async (req = request, res = response) => {
   const { id } = req.query;
   const user = await User.findByPk(id);
+  
   if (user === null) {
     res.json({
       message: `No se encontro el usuario con el id \'${id}\'.`
     });
+    console.log(user instanceof User);
   } else {
     res.json({
       user: user,
     },)
-    // console.log(user instanceof User); // true
-    // Its primary key is 123
+    console.log(user instanceof User); // true
   }
 }
 
@@ -51,7 +25,7 @@ const usuarioGetById = async (req = request, res = response) => {
 const usuariosGet = async (req = request, res = response) => {
   const { id } = req.query;
   if (id != null) {
-    usuarioGetById(req, res)
+    usuarioGetById(req, res);
     return;
   }
   const users = await User.findAll();
@@ -79,10 +53,11 @@ const usuariosPost = (req, res = response) => {
     res.json('Usuario y Contrasena vacios');
   }
 
+  //TODO: CAMBIAR LA BUSQUEDA POR LA CEDULA.
   User.findOne({
     where: {
-      Nombre: data.Nombre
-    }
+      Email: data.Email
+    } // Buscamos el usuario por el nombre
   }).then(user => {
     if (user != null) {
       res.json({

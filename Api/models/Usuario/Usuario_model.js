@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const sequelize = new Sequelize('sqlite::memory:');
 
-module.exports = (sequelize, type) => {
+module.exports = (sequelize, type) => { // Exportamos el modelo de usuario
     return sequelize.define('usuario', {
         ID: {
             type: Sequelize.INTEGER,
