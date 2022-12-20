@@ -47,6 +47,7 @@ module.exports = (sequelize, type) => { // Exportamos el modelo de usuario
         Email: {
             type: Sequelize.STRING,
             allowNull: false,
+            unique: true,
             validate: {
                 notNull: {
                     msg: 'Por favor ingrese su email'
@@ -78,10 +79,6 @@ module.exports = (sequelize, type) => { // Exportamos el modelo de usuario
             validate: {
                 notNull: {
                     msg: 'Por favor ingrese su contraseña',
-                },
-                len: {
-                    args: [8, 20],
-                    msg: 'La contraseña debe tener entre 8 y 20 caracteres',
                 },
             }
         },
@@ -122,4 +119,6 @@ module.exports = (sequelize, type) => { // Exportamos el modelo de usuario
         tableName: 'usuario',
         timestamps: false
     });
+
+    
 }

@@ -1,13 +1,11 @@
 const { response, request } = require('express');
-// const Usuario = require("../models/Usuario/Usuario_model");
-const models = require('../models/db')
+const bycript = require('bcryptjs');
+const { UserModel } = require('../models/db');
 
-const User = models.userModel; // Obtenemos el modelo de usuario
-
-const usuarioGetById = async (req = request, res = response) => {
+const usuariosGetById = async (req = request, res = response) => {
   const { id } = req.query;
-  const user = await User.findByPk(id);
-  
+  const user = await UserModel.findByPk(id);
+
   if (user === null) {
     res.json({
       message: `No se encontro el usuario con el id \'${id}\'.`
@@ -24,21 +22,23 @@ const usuarioGetById = async (req = request, res = response) => {
 
 const usuariosGet = async (req = request, res = response) => {
   const { id } = req.query;
-  if (id != null) {
-    usuarioGetById(req, res);
+  if (id != null) { // Si el id no es nulo, se busca el usuario por el id
+    usuariosGetById(req, res);
     return;
   }
-  const users = await User.findAll();
-  console.log(users.every(user => user instanceof User)); // true
+
+  const users = await UserModel.findAll();
+  console.log(users.every(user => user instanceof UserModel)); // true
   console.log("All users:", JSON.stringify(users, null, 2));
   res.json({
     users: users,
   },)
 }
 
+
+//METODO POST PARA CREAR UN USUARIO
 const usuariosPost = (req, res = response) => {
   const body = req.body;
-  console.log(body);
 
   const data = {
     Nombre: body.Nombre,
@@ -49,41 +49,40 @@ const usuariosPost = (req, res = response) => {
     Contrasenna: body.Contrasenna,
     Rol: body.Rol
   }
-  if (data.Contrasenna == '' || data.Nombre == '') {
-    res.json('Usuario y Contrasena vacios');
-  }
 
-  //TODO: CAMBIAR LA BUSQUEDA POR LA CEDULA.
-  User.findOne({
-    where: {
-      Email: data.Email
-    } // Buscamos el usuario por el nombre
-  }).then(user => {
-    if (user != null) {
-      res.json({
-        msg: "Usuario ya existe",
-        user
-      },)
-    } else {
-      User.create(data).then(() => {
-        console.log('Usuario creado');
-        res.json('Usuario creado');
-      }).catch(err => {
-        console.log(err)
-        res.send('error: ' + err)
-      })
-    }
+  //Encriptar la contraseña
+  const salt = bycript.genSaltSync(); //Genera el salt (Numero de vueltas para encriptar)
+  data.Contrasenna = bycript.hashSync(data.Contrasenna, salt); //Encripta la contraseña
+
+  UserModel.create(data).then(() => { // Creamos el usuario
+    console.log('Usuario creado');
+    res.json('Usuario creado');
+  }).catch(err => {
+    console.log(err)
+    res.send('error: ' + err)
   })
-
-
 
 }
 
-const usuariosPut = (req, res = response) => {
+const usuariosPut = async (req, res = response) => {
   const id = req.params.id;
+  const { ID ,Contrasenna, ...body } = req.body;
+
+  //TODO: Validar contra base de datos
+  if (Contrasenna) {
+    //Encriptar la contraseña
+    const salt = bycript.genSaltSync(); //Genera el salt (Numero de vueltas para encriptar)
+    body.Contrasenna = bycript.hashSync(Contrasenna, salt); //Encripta la contraseña
+  }
+
+  let user = await UserModel.update(body, { // Actualizamos el usuario
+    where: {
+      ID: id,
+    }
+  });
+  user = await UserModel.findByPk(id); // Buscamos el usuario actualizado
   res.json({
-    msg: "put Api - Controller",
-    id: id
+    user: user,
   },)
 }
 

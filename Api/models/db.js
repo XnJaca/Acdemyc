@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
-const UserModel = require('./Usuario/Usuario_model'); // Importamos el modelo de usuario
-
-const dbConfig = require("../config/db_config.js"); // Importamos la configuración de la base de datos
+const { UserModel, RoleModel, dbConfig } = require('./models'); // Importamos los modelos
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
@@ -10,10 +8,11 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 }); // Creamos la conexión a la base de datos
 
 const models = {
-    'userModel': UserModel(sequelize, Sequelize), // Creamos el modelo de usuario
+    'UserModel': UserModel(sequelize, Sequelize), // Creamos el modelo de usuario
+    'RoleModel': RoleModel(sequelize, Sequelize), // Creamos el modelo de rol
 };
 
-sequelize.sync().then(() => {
+sequelize.sync(UserModel, RoleModel).then(() => {
     console.log('Tablas sincronizadas\n');
 }); // Sincronizamos las tablas
 
