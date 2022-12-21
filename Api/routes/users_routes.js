@@ -25,10 +25,13 @@ router.post('/', [
 router.put('/:id',[
     // check('id', 'No es un ID valido.').isID, // El id debe ser valido
     check('id').custom(userExist), // El id debe existir
-    check('Rol', 'El rol no es valido.').custom(isValidRole()), // El rol debe ser valido
+    // check('Rol', 'El rol no es valido.').custom(isValidRole()), // El rol debe ser valido
     validarCampos // Middleware para validar los campos
 ], usuariosPut);
 
-router.delete('/', usuariosDelete);
+router.delete('/:id',[
+    check('id').custom(userExist),
+    validarCampos
+],usuariosDelete);
 
 module.exports = router;

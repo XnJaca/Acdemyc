@@ -2,6 +2,8 @@ const { response, request } = require('express');
 const bycript = require('bcryptjs');
 const { UserModel } = require('../models/db');
 
+
+//METODO GET PARA OBTENER TODOS LOS USUARIOS POR ID
 const usuariosGetById = async (req = request, res = response) => {
   const { id } = req.query;
   const user = await UserModel.findByPk(id);
@@ -20,6 +22,7 @@ const usuariosGetById = async (req = request, res = response) => {
 }
 
 
+//METODO GET PARA OBTENER TODOS LOS USUARIOS
 const usuariosGet = async (req = request, res = response) => {
   const { id } = req.query;
   if (id != null) { // Si el id no es nulo, se busca el usuario por el id
@@ -64,9 +67,10 @@ const usuariosPost = (req, res = response) => {
 
 }
 
+//METODO PUT PARA ACTUALIZAR UN USUARIO
 const usuariosPut = async (req, res = response) => {
   const id = req.params.id;
-  const { ID ,Contrasenna, ...body } = req.body;
+  const { ID ,Contrasenna,Rol, ...body } = req.body;
 
   //TODO: Validar contra base de datos
   if (Contrasenna) {
@@ -86,9 +90,15 @@ const usuariosPut = async (req, res = response) => {
   },)
 }
 
-const usuariosDelete = (req, res = response) => {
+const usuariosDelete = async (req, res = response) => {
+  const {id} = req.params;
+  
+  //Borrado fisico
+  const usuario = await UserModel.findByPk(id);
+  await usuario.destroy();
+  // const usuario = await
   res.json({
-    msg: "delete Api - Controller",
+    usuario
   },)
 }
 
