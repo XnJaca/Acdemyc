@@ -70,8 +70,8 @@ const usuariosPost = (req, res = response) => {
 //METODO PUT PARA ACTUALIZAR UN USUARIO
 const usuariosPut = async (req, res = response) => {
   const id = req.params.id;
-  const { ID ,Contrasenna,Rol, ...body } = req.body;
-
+  const { ID ,Contrasenna, Rol, ...body } = req.body;
+  
   //TODO: Validar contra base de datos
   if (Contrasenna) {
     //Encriptar la contraseña
@@ -96,9 +96,9 @@ const usuariosDelete = async (req, res = response) => {
   //Borrado fisico
   const usuario = await UserModel.findByPk(id);
   await usuario.destroy();
-  // const usuario = await
+  //TODO: HACER BORRADO LOGICO ESTADO = Inactivo.
   res.json({
-    usuario
+    msg: `Se elimino correctamente el usuario con el ${id}.`
   },)
 }
 
