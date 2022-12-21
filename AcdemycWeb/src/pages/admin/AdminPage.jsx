@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import acdemycApi from '../../api/acdemycApi'
-import { TablaDatos } from '../../components'
+import { ExampleWithReactQueryProvider } from '../../components'
 
 export const AdminPage = () => {
 
@@ -47,9 +47,9 @@ export const AdminPage = () => {
 
       <h1>Admin Page</h1> 
       <hr />
-      <h3>TODO: Configurar tabla</h3>
-      <TablaDatos columns={columns} data={data} />
-
+      <h3>TODO: Configurar tabla</h3> 
+      {/* <TablaDatos columns={columns} data={data} /> */}
+      <ExampleWithReactQueryProvider/>
     </div>
   )
 }

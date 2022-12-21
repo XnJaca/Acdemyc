@@ -15,7 +15,9 @@ export const AppRouter = () => {
 
     if (status === 'checking') {
         return (
-            <h3>Cargando....</h3>
+            <div className='d-flex h-100 w-100 align-items-center justify-content-center'>
+                <img src="/LogoAnimado.gif" width={300} alt="Acdemyc" />
+            </div>
         )
     }
 

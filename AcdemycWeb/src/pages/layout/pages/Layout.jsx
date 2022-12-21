@@ -54,7 +54,7 @@ export const Layout = () => {
 
       <div className="footer">
         <div className="copyright">
-          <p>Copyright &copy; 2022</p>
+          <p>Copyright &copy; Acdemyc 2022</p>
         </div>
       </div>
 
