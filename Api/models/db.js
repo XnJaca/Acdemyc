@@ -4,7 +4,7 @@ const { UserModel, RoleModel, dbConfig } = require('./models'); // Importamos lo
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: 'mysql',
-    // port: dbConfig.PORT
+    port: dbConfig.PORTDB
 }); // Creamos la conexión a la base de datos
 
 const models = {
