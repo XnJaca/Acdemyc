@@ -1,4 +1,6 @@
-export { convertEventsToDate } from "./convertEventsToDate"; 
-export { getMessagesES } from "./getMessages"; 
-export { localizer } from "./calendarLocalizer";
+export * from "./convertEventsToDate"; 
+export * from "./getMessages"; 
+export * from "./calendarLocalizer";
+export * from "./tableSpanish";
+export * from "./validationTextField";
    

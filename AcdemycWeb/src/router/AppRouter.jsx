@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuthStore } from '../hooks/';
-import { LoginPage, ChangePasswordPage, HomePage, AdminPage,Layout, PerfilPage } from '../pages';
+import { 
+    LoginPage, 
+    ChangePasswordPage, 
+    HomePage, 
+    AdminPage,
+    Layout, 
+    PerfilPage,
+    ProfesorPage 
+} from '../pages';
+ 
 
 
 export const AppRouter = () => {
@@ -52,6 +61,7 @@ export const AppRouter = () => {
                                     <Route index element={<HomePage />} />
                                     <Route path='perfil' element={<PerfilPage />} />
                                     <Route path='admin' element={<AdminPage />} />
+                                    <Route path='profesores' element={<ProfesorPage />} />
                                 </Route>
                             </>
                         )

@@ -5,12 +5,9 @@ export const InfoUserContent = () => {
   //se hace llamado a la api cada vez que se cargue este componente y actualizamos los datos
 
 
-  return (
-
-
+  return ( 
     <div className="container-fluid mt-3"> 
-      <div className="row">
-
+      <div className="row"> 
         <div className="col-lg-3 col-sm-6">
           <Link to={"admin"} className="card gradient-1 w-100">
             <div className="card-body">
@@ -25,7 +22,7 @@ export const InfoUserContent = () => {
         </div>
         
         <div className="col-lg-3 col-sm-6">
-          <div className="card gradient-2">
+          <Link to={'profesores'} className="card gradient-2">
             <div className="card-body">
               <h3 className="card-title text-white">Profesores</h3>
               <div className="d-inline-block">
@@ -34,7 +31,7 @@ export const InfoUserContent = () => {
               </div>
               <span className="float-right display-5 opacity-5"><i className="fa fa-solid fa-users"></i></span>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-lg-3 col-sm-6">
           <div className="card gradient-3">

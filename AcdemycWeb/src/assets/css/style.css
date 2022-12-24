@@ -14719,6 +14719,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .vh_100 {
   height: 100vh;
 }
+.vh_80 {
+  height: 80vh;
+}
 
 /* modificacion de dorpdown profile */
 .dropdown-profile li a span{
@@ -14878,3 +14881,33 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   font-weight: 500;
   transition: all 0.5s ease;
 }
+
+/* maximo de widht a todos los container */
+@media (min-width:1200px){
+  .container{
+    max-width: 1500px;
+  }
+}
+
+ /* footer */
+
+ .footer{  
+  padding: 0;
+ }
+
+
+
+
+ /* modal */
+
+ .newModalDataColumn{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ultimoDatoColumna .MuiTextField-root:last-child{
+   grid-column: 1 / 3;
+}
+

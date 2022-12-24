@@ -6,7 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import { localizer, getMessagesES } from '../../helpers'
 import { useAuthStore, useCalendarStore, useUiStore } from '../../hooks';
-import { EventModal } from '../EventModal';
+import { EventModal } from '../modals/EventModal';
 import { CalendarEvent } from './components/CalendarEvent';
 
 export const Calendario = () => {
@@ -62,10 +62,7 @@ export const Calendario = () => {
             }
         });
         onOpenModal();
-    };
-
-
-
+    };  
 
     return (
 
@@ -96,7 +93,7 @@ export const Calendario = () => {
                 onView={onViewChanged}
             />
 
-            <EventModal />
+            <EventModal /> 
         </div>
 
     )

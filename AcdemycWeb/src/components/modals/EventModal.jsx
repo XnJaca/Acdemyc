@@ -8,7 +8,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 import Swal from 'sweetalert2';
-import { useCalendarStore, useAuthStore, useUiStore } from '../hooks';
+import { useCalendarStore, useAuthStore, useUiStore } from '../../hooks';
 
 registerLocale('es', es)
 
