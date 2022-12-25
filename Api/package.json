@@ -1,11 +1,11 @@
 {
-  "name": "restserver",
+  "name": "acdemycapi",
   "version": "1.0.0",
-  "description": "",
+  "description": "Api sistema educacional",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "test",
+    "start": "nodemon app.js"
   },
   "author": "xnjaca",
   "license": "ISC",
@@ -15,11 +15,9 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.14.2",
-    "mysql": "^2.18.1",
-    "mysql-model": "^0.0.2",
+    "jsonwebtoken": "^9.0.0",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.20",
-    "sequelize": "^6.27.0",
+    "sequelize": "^6.28.0",
     "sqlite3": "^5.1.4"
   }
 }
