@@ -29,7 +29,7 @@ const connLocal = {
 const sequelize = new Sequelize(connProduccion.DB, connProduccion.USER, connProduccion.PASSWORD, {
     host: connProduccion.HOST,
     dialect: 'mysql',
-    port: connProduccion.PORT, //Descomentar solo en produccion
+    port: connProduccion.PORTDB, //Descomentar solo en produccion
 })
 
 //Una vez creada la conexion, obtenemos los modelos
