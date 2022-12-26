@@ -5,7 +5,7 @@ const { Administrador, Usuario, TipoUsuarioxUsuario, Rol, sequelize } = require(
 const administradoresGet = async (req = request, res = response) => {
     //Obtener los parametros del header
     const fk_institucion = req.header('fk_institucion');
-    
+
     if (fk_institucion == null) {
         return res.status(400).json({
             msg: 'No se ha enviado el parametro fk_institucion en el header'
@@ -105,85 +105,91 @@ const administradoresPut = async (req = request, res = response) => {
     const { id } = req.params;
 
     //Obtenemos el id del usuario
-    const { fk_usuario } = req.body;
+    const { fk_usuario } = id;
+
+    //Obtenemos los datos para modificar el usuario
+    const { clave, ...resto } = req.body;
 
     //Creamos una transaccion para modificar el administrador, usuario, y tipo_usuario_x_usuario
     try {
         const result = await sequelize.transaction(async (t) => {
 
-            //Encriptamos la contrasena si viene por parametro
-            if (req.body.clave != null) {
-                const salt = bycript.genSaltSync();
-                const password = bycript.hashSync(req.body.clave, salt);
+            //Buscamos el usuario
+            const usuario = await Usuario.findByPk(id);
+
+            //Si existe no el usuario
+            if (!usuario) {
+                return res.status(400).json({
+                    msg: 'No existe el usuario con el id ' + id
+                });
             }
-            
 
-            //Modificamos el usuario
-            const usuario = await Usuario.update({
-                cedula: req.body.cedula,
-                nombre: req.body.nombre,
-                apellidos: req.body.apellidos,
-                fecha_nacimiento: req.body.fecha_nacimiento,
-                genero: req.body.genero,
-                email: req.body.email,
-                clave: password,
-                telefono: req.body.telefono,
-                celular: req.body.celular,
-                direccion: req.body.direccion,
-                fk_institucion: req.body.fk_institucion,
-                estado: req.body.estado,
-                imagen: req.body.imagen,
-            }, {
-                where: {
-                    id: fk_usuario
-                }
-            }, { transaction: t });
+            //Si viene la clave la encriptamos
+            if (clave) {
+                const salt = bycript.genSaltSync();
+                resto.clave = bycript.hashSync(clave, salt);
+            }
 
-            //Modificamos el administrador
-            const administrador = await Administrador.update({
-                fk_rol_administrador: req.body.fk_rol_administrador
-            }, {
-                where: {
-                    id: id
-                }
-            }, { transaction: t });
-            
-            //Modificamos el tipo de usuario
-            const tipo_usuario = await TipoUsuarioxUsuario.update({
-                fk_tipo_usuario: req.body.tipo_usuario
-            }, {
-                where: {
-                    fk_usuario: fk_usuario
-                }
-            }, { transaction: t });
+            //Actualizamos el usario
+            await usuario.update(resto, { transaction: t });
+
+            //Buscamos el administrador
+            const administrador = await Administrador.findByPk(id);
+
+            //Si existe no el administrador
+            if (!administrador) {
+                return res.status(400).json({
+                    msg: 'No existe el administrador con el id ' + id
+                });
+            }
+
+            //Actualizamos el administrador
+            await administrador.update(resto, { transaction: t });
+
+            //Buscamos el tipo_usuario_x_usuario
+            const tipo_usuario = await TipoUsuarioxUsuario.findOne({ where: { fk_usuario: id } });
+
+
+            //Si existe no el tipo_usuario_x_usuario
+            if (!tipo_usuario) {
+                return res.status(400).json({
+                    msg: 'No existe el tipo_usuario_x_usuario con el id ' + id
+                });
+            }
+
+            //Actualizamos el tipo_usuario_x_usuario
+            await tipo_usuario.update(resto, { transaction: t });
 
             return {
                 usuario,
                 administrador,
                 tipo_usuario
             }
+
         });
-        
+
         //Devolvemos al respuesta
         res.json({
-            msg: 'Administrador modificado',
+            msg: 'Administrador actualizado',
             result
-        }); 
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            msg: 'Error al modificar el Administrador',
+            msg: 'Error al actualizar el Administrador',
             error
         });
     }
 }
+
+
 
 // METODO PARA ELIMINAR EL USUARIO ADMINISTRADOR
 const administradoresDelete = async (req = request, res = response) => {
 
     //Obtenemos el id del administrador
     const { id } = req.params;
-    
+
     //Obtenemos el id del usuario
     const { fk_usuario } = req.body;
 

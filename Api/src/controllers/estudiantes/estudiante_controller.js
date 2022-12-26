@@ -41,22 +41,6 @@ const estudiantesGet = async (req = request, res = response) => {
 
 //METODO PARA CREAR UN ESTUDIANTE
 const estudiantesPost = async (req = request, res = response) => {
-    // const {
-    //     cedula,
-    //     nombre,
-    //     apellidos,
-    //     fecha_nacimiento,
-    //     genero,
-    //     email,
-    //     telefono,
-    //     clave,
-    //     celular,
-    //     direccion,
-    //     fk_institucion,
-    //     estado,
-    //     imagen,
-    //     tipo_usuario } = req.body;
-
     //Creamos una transaccion para crear estudiante, usuario, y tipo_usuario_x_usuario
     try {
         const result = await sequelize.transaction(async (t) => {
