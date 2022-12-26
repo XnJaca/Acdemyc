@@ -2,8 +2,9 @@ const { response, request } = require('express');
 const bycript = require('bcryptjs');
 const { Usuario, Estudiante, TipoUsuarioxUsuario, sequelize } = require('../../config/db_config');
 
+//METODO PARA OBTENER TODOS LOS ESTUDIANTES
 const estudiantesGet = async (req = request, res = response) => {
-    //Obtener los parametros del header
+    //Obtener el fk_institucion. que viene en el header
     const fk_institucion = req.header('fk_institucion');
 
     if (fk_institucion == null) {
@@ -40,21 +41,21 @@ const estudiantesGet = async (req = request, res = response) => {
 
 //METODO PARA CREAR UN ESTUDIANTE
 const estudiantesPost = async (req = request, res = response) => {
-    const {
-        cedula,
-        nombre,
-        apellidos,
-        fecha_nacimiento,
-        genero,
-        email,
-        telefono,
-        clave,
-        celular,
-        direccion,
-        fk_institucion,
-        estado,
-        imagen,
-        tipo_usuario } = req.body;
+    // const {
+    //     cedula,
+    //     nombre,
+    //     apellidos,
+    //     fecha_nacimiento,
+    //     genero,
+    //     email,
+    //     telefono,
+    //     clave,
+    //     celular,
+    //     direccion,
+    //     fk_institucion,
+    //     estado,
+    //     imagen,
+    //     tipo_usuario } = req.body;
 
     //Creamos una transaccion para crear estudiante, usuario, y tipo_usuario_x_usuario
     try {
@@ -62,23 +63,23 @@ const estudiantesPost = async (req = request, res = response) => {
 
             //Encriptamos la contrasena
             const salt = bycript.genSaltSync();
-            const password = bycript.hashSync(clave, salt);
+            const password = bycript.hashSync(req.body.clave, salt);
 
             //Creamos el usuario
             const usuario = await Usuario.create({
-                cedula,
-                nombre,
-                apellidos,
-                fecha_nacimiento,
-                genero,
-                email,
+                cedula: req.body.cedula,
+                nombre: req.body.nombre,
+                apellidos: req.body.apellidos,
+                fecha_nacimiento: req.body.fecha_nacimiento,
+                genero: req.body.genero,
+                email: req.body.email,
+                telefono: req.body.telefono,
                 clave: password,
-                telefono,
-                celular,
-                direccion,
-                fk_institucion,
-                imagen,
-                estado
+                celular: req.body.celular,
+                direccion: req.body.direccion,
+                fk_institucion: req.body.fk_institucion,
+                estado: req.body.estado,
+                imagen: req.body.imagen
             }, { transaction: t });
 
             //Creamos el estudiante
@@ -115,7 +116,53 @@ const estudiantesPost = async (req = request, res = response) => {
 }
 
 //METODO PARA MODIFICAR ESTUDIANTE
+const estudiantesPut = async (req = request, res = response) => {
+    const { id } = req.params;
+    const { _id, ...resto } = req.body;
 
+    //creamos una transaccion para actualizar el usuario
+    try {
+        const result = await sequelize.transaction(async (t) => {
+
+            //Buscamos el usuario
+            const usuario = await Usuario.findByPk(id);
+
+            //Si no existe el usuario
+            if (!usuario) {
+                return res.status(404).json({
+                    msg: 'No existe el usuario con el id ' + id
+                });
+            }
+
+            //Actualizamos el usuario
+            await usuario.update(resto, { transaction: t });
+
+            //Buscamos el estudiante
+            const estudiante = await Estudiante.findOne({
+                where: { fk_usuario: id }
+            });
+
+            //Actualizamos el estudiante
+            await estudiante.update(resto, { transaction: t });
+
+            return {
+                usuario,
+                estudiante
+            }
+        });
+
+        res.json({
+            msg: 'Estudiante actualizado',
+            result
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Error al actualizar el estudiante',
+            error
+        });
+    }
+}
 
 //Eliminamos un usuario
 const estudiantesDelete = async (req = request, res = response) => {
@@ -146,6 +193,7 @@ const estudiantesDelete = async (req = request, res = response) => {
 module.exports = {
     estudiantesGet,
     estudiantesPost,
+    estudiantesPut,
     estudiantesDelete
 }
 

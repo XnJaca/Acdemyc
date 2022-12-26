@@ -4,7 +4,7 @@ const { validarCampos } = require('../../middlewares/validar_campos');
 const { existeUsuarioPorCedula, existeEmail,isEstudiante,verificarTipoUsuario } = require('../../helpers/db-validators');
 
 const { Estudiantes } = require('../../controllers/controller');
-const { estudiantesGet,estudiantesPost,estudiantesDelete } = Estudiantes;
+const { estudiantesGet,estudiantesPost,estudiantesDelete,estudiantesPut } = Estudiantes;
 
 
 
@@ -36,6 +36,12 @@ router.post('/', [
     check('tipo_usuario', 'El tipo de usuario debe ser un estudiante').custom(isEstudiante),
     validarCampos
 ], estudiantesPost);
+
+//Ruta para actualizar el Estudiante
+router.put('/:id', [
+    check('id').not().isEmpty(),
+    validarCampos
+], estudiantesPut);
 
 //Ruta para eliminar el Estudiante
 router.delete('/:id', [
