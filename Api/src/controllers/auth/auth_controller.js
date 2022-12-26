@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const bycript = require('bcryptjs');
-const { Usuario, TipoUsuarioxUsuario, TipoUsuario } = require('../../config/db_config');
+const { Usuario, TipoUsuarioxUsuario, TipoUsuario, Administrador, Rol } = require('../../config/db_config');
 const { generarJWT } = require('../../helpers/generar-jwt');
 
 
@@ -14,8 +14,11 @@ const login = async (req = request, res = response) => {
         // Consultar el tipo de usuario
         let tipo_usuario = await TipoUsuarioxUsuario.findOne({ where: { fk_usuario: usuario.id } });
         tipo_usuario = await TipoUsuario.findByPk(tipo_usuario.fk_tipo_usuario);
+        let rol_administrador = await Administrador.findOne({where : {fk_usuario : usuario.id}});
+        rol_administrador = await Rol.findByPk(rol_administrador.fk_rol_administrador);
+
         //Mostrar el tipo de usuario
-        console.log(tipo_usuario);
+        console.log("ROOOOL ADMINNNN",rol_administrador);
 
         if (!usuario) {
             return res.status(400).json({
@@ -61,7 +64,8 @@ const login = async (req = request, res = response) => {
             },
             tipo_usuario: {
                 id: tipo_usuario.id,
-                descripcion: tipo_usuario.descripcion
+                descripcion: tipo_usuario.descripcion,
+                rol_administrador: rol_administrador.descripcion
             },
             token
         })

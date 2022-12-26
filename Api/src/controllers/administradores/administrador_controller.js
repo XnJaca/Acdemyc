@@ -99,10 +99,132 @@ const administradoresPost = async (req = request, res = response) => {
 
 }
 
+// METODO PARA MODIFICAR UN ADMINISTRADOR
+const administradoresPut = async (req = request, res = response) => {
+
+    //Obtenemos el id del administrador
+    const { id } = req.params;
+
+    //Obtenemos el id del usuario
+    const { fk_usuario } = req.body;
+
+    //Creamos una transaccion para modificar el administrador, usuario, y tipo_usuario_x_usuario
+    try {
+        const result = await sequelize.transaction(async (t) => {
+
+            //Encriptamos la contrasena
+            const salt = bycript.genSaltSync();
+            const password = bycript.hashSync(req.body.clave, salt);
+
+            //Modificamos el usuario
+            const usuario = await Usuario.update({
+                cedula: req.body.cedula,
+                nombre: req.body.nombre,
+                apellidos: req.body.apellidos,
+                fecha_nacimiento: req.body.fecha_nacimiento,
+                genero: req.body.genero,
+                email: req.body.email,
+                clave: password,
+                telefono: req.body.telefono,
+                celular: req.body.celular,
+                direccion: req.body.direccion,
+                fk_institucion: req.body.fk_institucion,
+                estado: req.body.estado,
+                imagen: req.body.imagen,
+            }, {
+                where: {
+                    id: fk_usuario
+                }
+            }, { transaction: t });
+
+            //Modificamos el administrador
+            const administrador = await Administrador.update({
+                fk_rol_administrador: req.body.fk_rol_administrador
+            }, {
+                where: {
+                    id: id
+                }
+            }, { transaction: t });
+            
+            //Modificamos el tipo de usuario
+            const tipo_usuario = await TipoUsuarioxUsuario.update({
+                fk_tipo_usuario: req.body.tipo_usuario
+            }, {
+                where: {
+                    fk_usuario: fk_usuario
+                }
+            }, { transaction: t });
+
+            return {
+                usuario,
+                administrador,
+                tipo_usuario
+            }
+        });
+        
+        //Devolvemos al respuesta
+        res.json({
+            msg: 'Administrador modificado',
+            result
+        }); 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Error al modificar el Administrador',
+            error
+        });
+    }
+}
+
+// METODO PARA ELIMINAR EL USUARIO ADMINISTRADOR
+const administradoresDelete = async (req = request, res = response) => {
+
+    //Obtenemos el id del administrador
+    const { id } = req.params;
+    
+    //Obtenemos el id del usuario
+    const { fk_usuario } = req.body;
+
+    //Creamos una transaccion para eliminar el administrador, usuario, y tipo_usuario_x_usuario
+    try {
+        const result = await sequelize.transaction(async (t) => {
+
+            //Actualizamos el estado del usuario a 0
+            const usuario = await Usuario.update({
+                estado: 0
+            }, {
+                where: {
+                    id: fk_usuario
+                }
+            }, { transaction: t });
+
+            return {
+                usuario,
+            }
+        });
+
+        //Devolvemos al respuesta
+        res.json({
+            msg: 'Administrador eliminado',
+            result
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Error al eliminar el Administrador',
+            error
+        });
+    }
+}
+
+
 
 module.exports = {
     administradoresGet,
-    administradoresPost
+    administradoresPost,
+    administradoresPut,
+    administradoresDelete
+
 }
 
 
