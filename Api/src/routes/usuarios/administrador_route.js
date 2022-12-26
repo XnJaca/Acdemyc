@@ -4,7 +4,7 @@ const { validarCampos } = require('../../middlewares/validar_campos');
 const { existeUsuarioPorCedula, existeEmail, existeRolPorId, verificarTipoUsuario, isAdmin } = require('../../helpers/db-validators');
 
 const { Administradores } = require('../../controllers/controller');
-const { administradoresGet, administradoresPost } = Administradores;
+const { administradoresGet, administradoresPost, administradoresPut, administradoresDelete } = Administradores;
 const router = Router();
 
 router.get('/', administradoresGet);
@@ -30,6 +30,18 @@ router.post('/', [
 
     validarCampos
 ], administradoresPost);
+
+router.put('/:id', [
+    check('id', 'Id es obligatorio').not().isEmpty(),
+    validarCampos
+], administradoresPut);
+
+router.delete('/:id', [
+    check('id', 'Id es obligatorio').not().isEmpty(),
+    validarCampos
+], administradoresDelete);
+
+
 
 
 module.exports = router;

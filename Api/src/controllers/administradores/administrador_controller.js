@@ -15,7 +15,6 @@ const administradoresGet = async (req = request, res = response) => {
     //Buscar todos los usuarios administradores
     const administradores = await Administrador.findAll({
         include: [{
-
             model: Usuario,
             attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado'],
             where: { estado: 1, fk_institucion: fk_institucion }
