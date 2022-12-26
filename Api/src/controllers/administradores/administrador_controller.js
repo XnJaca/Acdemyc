@@ -111,9 +111,12 @@ const administradoresPut = async (req = request, res = response) => {
     try {
         const result = await sequelize.transaction(async (t) => {
 
-            //Encriptamos la contrasena
-            const salt = bycript.genSaltSync();
-            const password = bycript.hashSync(req.body.clave, salt);
+            //Encriptamos la contrasena si viene por parametro
+            if (req.body.clave != null) {
+                const salt = bycript.genSaltSync();
+                const password = bycript.hashSync(req.body.clave, salt);
+            }
+            
 
             //Modificamos el usuario
             const usuario = await Usuario.update({
