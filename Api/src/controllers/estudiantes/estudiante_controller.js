@@ -3,12 +3,20 @@ const bycript = require('bcryptjs');
 const { Usuario, Estudiante, TipoUsuarioxUsuario, sequelize } = require('../../config/db_config');
 
 const estudiantesGet = async (req = request, res = response) => {
-    const estudiantes = await Estudiante.findOne({
+    //Obtener los parametros del header
+    const fk_institucion = req.header('fk_institucion');
 
+    if (fk_institucion == null) {
+        return res.status(400).json({
+            msg: 'No se ha enviado el parametro fk_institucion en el header'
+        });
+    }
+
+    const estudiantes = await Estudiante.findAll({
         include: [{
             model: Usuario,
-            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'telefono', 'direccion', 'estado'],
-            where: { estado: 1 },
+            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'telefono', 'direccion', 'estado', 'fk_institucion'],
+            where: { estado: 1, fk_institucion: fk_institucion },
         },
         {
             model: TipoUsuarioxUsuario,
@@ -20,10 +28,10 @@ const estudiantesGet = async (req = request, res = response) => {
     const total = await Estudiante.count({
         include: [{
             model: Usuario,
-            where:{estado: 1},
+            where: { estado: 1 },
         }]
     });
-    
+
     res.json({
         estudiantes,
         total,
@@ -115,7 +123,7 @@ const estudiantesDelete = async (req = request, res = response) => {
 
     //Buscamos el usuario
     const usuario = await Usuario.findByPk(id);
-    
+
     //Si no existe el usuario
     if (!usuario) {
         return res.status(404).json({

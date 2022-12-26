@@ -3,12 +3,22 @@ const bycript = require('bcryptjs');
 const { Administrador, Usuario, TipoUsuarioxUsuario, Rol, sequelize } = require('../../config/db_config');
 
 const administradoresGet = async (req = request, res = response) => {
+    //Obtener los parametros del header
+    const fk_institucion = req.header('fk_institucion');
+    
+    if (fk_institucion == null) {
+        return res.status(400).json({
+            msg: 'No se ha enviado el parametro fk_institucion en el header'
+        });
+    }
+
     //Buscar todos los usuarios administradores
     const administradores = await Administrador.findAll({
         include: [{
 
             model: Usuario,
-            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado']
+            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado'],
+            where: { estado: 1, fk_institucion: fk_institucion }
         },
         {
             model: Rol,

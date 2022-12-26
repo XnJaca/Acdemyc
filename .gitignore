@@ -1,1 +1,2 @@
 /.env
+/Api/src/config/db_config.js

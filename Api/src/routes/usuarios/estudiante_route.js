@@ -34,7 +34,6 @@ router.post('/', [
     check('tipo_usuario', 'El tipo de usuario es obligatorio').not().isEmpty(),
     check('tipo_usuario', 'El tipo de usuario no existe.').custom(verificarTipoUsuario),
     check('tipo_usuario', 'El tipo de usuario debe ser un estudiante').custom(isEstudiante),
-    
     validarCampos
 ], estudiantesPost);
 
