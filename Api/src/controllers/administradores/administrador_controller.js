@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const bycript = require('bcryptjs');
-const { Administrador, Usuario, TipoUsuarioxUsuario, Rol_Administrador, sequelize } = require('../../config/modelsdb');
+const { Administrador, Usuario, TipoUsuarioxUsuario, Rol_Administrador,TipoUsuario, sequelize } = require('../../config/modelsdb');
 
 const administradoresGet = async (req = request, res = response) => {
     //Obtener los parametros del header
