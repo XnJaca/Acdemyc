@@ -168,20 +168,6 @@ const administradoresPut = async (req = request, res = response) => {
                         model: Usuario,
                         as: 'usuario',
                         attributes: ['id', 'cedula', 'nombre', 'apellidos', 'fecha_nacimiento', 'genero', 'email', 'clave', 'telefono', 'celular', 'direccion', 'fk_institucion', 'estado', 'imagen'],
-                        include: [
-                            {
-                                model: TipoUsuarioxUsuario,
-                                as: 'tipo_usuario',
-                                attributes: ['id', 'fk_usuario', 'fk_tipo_usuario'],
-                                include: [
-                                    {
-                                        model: TipoUsuario,
-                                        as: 'tipo_usuario',
-                                        attributes: ['id', 'nombre']
-                                    }
-                                ]
-                            }
-                        ]
                     },
                     {
                         model: Rol_Administrador,
