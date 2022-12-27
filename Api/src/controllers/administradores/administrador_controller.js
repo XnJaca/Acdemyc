@@ -112,7 +112,7 @@ const administradoresPut = async (req = request, res = response) => {
 
     //Creamos una transaccion para modificar el administrador, usuario, y tipo_usuario_x_usuario
     try {
-        const result = await sequelize.transaction(async (t) => {
+        const admin = await sequelize.transaction(async (t) => {
 
             //Buscamos el usuario
             const usuario = await Usuario.findByPk(id);
@@ -160,29 +160,28 @@ const administradoresPut = async (req = request, res = response) => {
             //Actualizamos el tipo_usuario_x_usuario
             await tipo_usuario.update(resto, { transaction: t });
 
-            //Buscamos el administrador usuario actualizado
-            const administradorActualizado = await Administrador.findOne({
-                where: { fk_usuario: id },
-                include: [
-                    {
-                        model: Usuario,
-                        as: 'usuario',
-                        attributes: ['id', 'cedula', 'nombre', 'apellidos', 'fecha_nacimiento', 'genero', 'email', 'clave', 'telefono', 'celular', 'direccion', 'fk_institucion', 'estado', 'imagen'],
-                    },
-                    {
-                        model: Rol_Administrador,
-
-                        as: 'rol_administrador',
-                        attributes: ['id', 'descripcion']
-                    }
-                ]
-            });
-
-
             return {
                 administradorActualizado
             }
 
+        });
+
+        //Buscamos el administrador usuario actualizado
+        const result = await Administrador.findOne({
+            where: { fk_usuario: id },
+            include: [
+                {
+                    model: Usuario,
+                    as: 'usuario',
+                    attributes: ['id', 'cedula', 'nombre', 'apellidos', 'fecha_nacimiento', 'genero', 'email', 'clave', 'telefono', 'celular', 'direccion', 'fk_institucion', 'estado', 'imagen'],
+                },
+                {
+                    model: Rol_Administrador,
+
+                    as: 'rol_administrador',
+                    attributes: ['id', 'descripcion']
+                }
+            ]
         });
 
         //Devolvemos al respuesta
