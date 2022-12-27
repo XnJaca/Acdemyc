@@ -1,10 +1,40 @@
 const { response, request } = require('express');
 const bycript = require('bcryptjs');
-const { Administrador, Usuario, TipoUsuarioxUsuario, Rol_Administrador,TipoUsuario, sequelize } = require('../../config/modelsdb');
+const { Administrador, Usuario, TipoUsuarioxUsuario, Rol_Administrador, TipoUsuario, sequelize } = require('../../config/modelsdb');
 
+// Metodo para obtener el administrador por id
+
+const administradorGetById = async (req = request, res = response) => {
+
+    const { id } = req.query;
+
+    //Buscar el administrador por id
+    const administrador = await Administrador.findByPk(id, {
+        include: [Usuario, Rol_Administrador]
+    });
+
+    if (administrador == null) {
+        return res.status(400).json({
+            msg: 'No existe un administrador con el id ' + id
+        });
+    }
+
+    res.json({
+        administrador
+    })
+
+}
+
+
+
+// Metodo para obtener los administradores
 const administradoresGet = async (req = request, res = response) => {
     //Obtener los parametros del header
     const fk_institucion = req.header('fk_institucion');
+
+    if (req.query.id) {
+        return administradorGetById(req, res);
+    }
 
     if (fk_institucion == null) {
         return res.status(400).json({
@@ -198,8 +228,6 @@ const administradoresPut = async (req = request, res = response) => {
         });
     }
 }
-
-
 
 // METODO PARA ELIMINAR EL USUARIO ADMINISTRADOR
 const administradoresDelete = async (req = request, res = response) => {
