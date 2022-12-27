@@ -161,9 +161,10 @@ const administradoresPut = async (req = request, res = response) => {
             await tipo_usuario.update(resto, { transaction: t });
 
             return {
-                administradorActualizado
+                usuario,
+                administrador,
+                tipo_usuario
             }
-
         });
 
         //Buscamos el administrador usuario actualizado
