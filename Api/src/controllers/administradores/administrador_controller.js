@@ -180,7 +180,7 @@ const administradoresPut = async (req = request, res = response) => {
 
 
             return {
-                administrador: administradorActualizado
+                administradorActualizado
             }
 
         });
