@@ -35,6 +35,4 @@ router.put('/:id_institucion', [
 // Ruta para borrar una institucion
 router.delete('/:id_institucion', institucionesDelete);
 
-
-
 module.exports = router;

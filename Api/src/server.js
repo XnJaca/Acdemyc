@@ -7,13 +7,15 @@ class Server {
             this.app = express();
             this.port = process.env.PORT;
 
-            this.administradorPath = '/api/administrador';
-            this.estudiantesPath = '/api/estudiantes';
+            this.authPath = '/api/auth';
             this.usuariosPath = '/api/usuarios';
+            this.roladministradorPath = '/api/roladministrador';
+            this.estudiantesPath = '/api/estudiantes';
             this.institucionesPath = '/api/instituciones';
+            this.administradorPath = '/api/administrador';
+            // this.roladministradorPath =- '/api/roladministrador';
             this.tipo_institucionPath = '/api/tipoinstitucion';
-            this.authPath = '/api/auth'
-    
+
             // Middlewares
             this.middlewares();
     
@@ -34,12 +36,14 @@ class Server {
         }
     
         routes() {
-            this.app.use( this.administradorPath, require('./routes/usuarios/administrador_route') );
+            this.app.use( this.authPath, require('./routes/auth_route') );
             this.app.use( this.usuariosPath, require('./routes/usuarios/usuario_route') );
+            this.app.use( this.roladministradorPath, require('./routes/roles/rol_administrador_route') );
+            this.app.use( this.estudiantesPath, require('./routes/usuarios/estudiante_route') );
+            this.app.use( this.administradorPath, require('./routes/usuarios/administrador_route') );
+            // this.app.use( this.roladministradorPath, require('./routes/roles/roladministrador_route') );
             this.app.use( this.institucionesPath, require('./routes/instituciones/institucion_route') );
             this.app.use( this.tipo_institucionPath, require('./routes/instituciones/tipo_institucion_route') );
-            this.app.use( this.estudiantesPath, require('./routes/usuarios/estudiante_route') );
-            this.app.use( this.authPath, require('./routes/auth_route') );
         }
     
         listen() {

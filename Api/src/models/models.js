@@ -5,7 +5,7 @@ const TipoUsuarioxUsuarioFactory = require('./usuario/tipo_usuario_x_usuario_mod
 const EstudianteFactory = require('./usuario/estudiante/estudiante_model');
 const InstitucionFactory = require('./institucion/institucion_model');
 const TipoInstitucionFactory = require('./institucion/tipo_institucion_model');
-const RolFactory = require('./rol/rol_model');
+const RolAdministradorFactory = require('./rol/rol_administrador_model');
 
 module.exports = {
     AdministradorFactory,
@@ -15,7 +15,7 @@ module.exports = {
     EstudianteFactory,
     InstitucionFactory,
     TipoInstitucionFactory,
-    RolFactory
+    RolAdministradorFactory
 }
 
 // Si añade un modelo, debe sincronizarlo en el archivo de '../config/db_config'

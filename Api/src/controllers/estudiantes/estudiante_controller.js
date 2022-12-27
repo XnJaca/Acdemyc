@@ -171,9 +171,6 @@ const estudiantesDelete = async (req = request, res = response) => {
     });
 }
 
-
-
-
 module.exports = {
     estudiantesGet,
     estudiantesPost,
