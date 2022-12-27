@@ -173,7 +173,7 @@ const administradoresPut = async (req = request, res = response) => {
                         model: Rol_Administrador,
 
                         as: 'rol_administrador',
-                        attributes: ['id', 'nombre']
+                        attributes: ['id', 'descripcion']
                     }
                 ]
             });
