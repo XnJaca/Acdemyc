@@ -1,4 +1,4 @@
-const { Usuario, Institucion, Rol, TipoInstitucion, TipoUsuario } = require('../config/db_config');
+const { Usuario, Institucion, Rol, TipoInstitucion, TipoUsuario } = require('../config/modelsdb');
 
 //Buscar usuario por cedula
 const existeUsuarioPorCedula = async (cedula = '') => {

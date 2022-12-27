@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const bycript = require('bcryptjs');
-const { Rol_Administrador, sequelize } = require('../../config/db_config');
+const { Rol_Administrador, sequelize } = require('../../config/modelsdb');
 
 //Metodo get para obtener todos los rol de administrador
 const rolAdministradorGet = async (req = request, res = response) => {

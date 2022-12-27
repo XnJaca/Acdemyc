@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const { TipoInstitucion } = require('../../config/db_config');
+const { TipoInstitucion } = require('../../config/modelsdb');
 
 const tipoInstitucionGet = async (req = request, res = response) => {
     const tipo_institucion = await TipoInstitucion.findAll();

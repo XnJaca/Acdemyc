@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const bycript = require('bcryptjs');
-const { Usuario, Estudiante, TipoUsuarioxUsuario, sequelize } = require('../../config/db_config');
+const { Usuario, Estudiante, TipoUsuarioxUsuario, sequelize } = require('../../config/modelsdb');
 
 //METODO PARA OBTENER TODOS LOS ESTUDIANTES
 const estudiantesGet = async (req = request, res = response) => {

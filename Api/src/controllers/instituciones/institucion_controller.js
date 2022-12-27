@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const { Institucion, TipoInstitucion } = require('../../config/db_config');
+const { Institucion, TipoInstitucion } = require('../../config/modelsdb');
 
 // Metodo para obtener todas instituciones
 const institucionesGet = async (req = request, res = response) => {

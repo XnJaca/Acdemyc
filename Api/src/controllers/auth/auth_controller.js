@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const bycript = require('bcryptjs');
-const { Usuario, TipoUsuarioxUsuario, TipoUsuario, Administrador, Rol_Administrador } = require('../../config/db_config');
+const { Usuario, TipoUsuarioxUsuario, TipoUsuario, Administrador, Rol_Administrador } = require('../../config/modelsdb');
 const { generarJWT } = require('../../helpers/generar-jwt');
 
 
