@@ -6,7 +6,7 @@ const connProduccion = {
     USER: "acdemyccoffee",
     PASSWORD: "Jaca2001!",
     DB: "acdemycdb",
-    PORTDB:"10014"
+    PORT:"10014"
 }
 // AMBIENTE LOCAL
 const connLocal = {
@@ -20,7 +20,7 @@ const connLocal = {
 const sequelize = new Sequelize(connProduccion.DB, connProduccion.USER, connProduccion.PASSWORD, {
     host: connProduccion.HOST,
     dialect: 'mysql',
-    port: connProduccion.PORTDB, //Descomentar solo en produccion
+    port: connProduccion.PORT, //Descomentar solo en produccion
 })
 
 module.exports = {
