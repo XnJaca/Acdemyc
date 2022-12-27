@@ -1,4 +1,4 @@
-const { Usuario, Institucion, Rol, TipoInstitucion, TipoUsuario } = require('../config/modelsdb');
+const { Usuario, Institucion, Rol_Administrador, TipoInstitucion, TipoUsuario } = require('../config/modelsdb');
 
 //Buscar usuario por cedula
 const existeUsuarioPorCedula = async (cedula = '') => {
@@ -94,7 +94,7 @@ const existeTipoInstitucionPorId = async (id) => {
 
 //Buscar rol por id
 const existeRolPorId = async (id) => {
-    const existeRol = await Rol.findByPk(id);
+    const existeRol = await Rol_Administrador.findByPk(id);
     if (!existeRol) {
         throw new Error(`El id ${id} no existe`);
     }
