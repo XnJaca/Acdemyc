@@ -3,7 +3,7 @@ const { Institucion, TipoInstitucion } = require('../../config/modelsdb');
 
 // Metodo para obtener todas instituciones
 const institucionesGet = async (req = request, res = response) => {
-    if (req.params.id)
+    if (req.query.id)
         return institucionesGetById(req, res);
 
     const instituciones = await Institucion.findAll();
@@ -18,7 +18,7 @@ const institucionesGet = async (req = request, res = response) => {
 
 //Metodo para obtener por id
 const institucionesGetById = async (req = resquest, res = response) => {
-    const { id } = req.params;
+    const { id } = req.query;
     const institucion = await Institucion.findByPk(id);
     res.json({
         institucion

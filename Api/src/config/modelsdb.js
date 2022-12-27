@@ -9,6 +9,7 @@ const {
     RolAdministradorFactory,
     TipoInstitucionFactory,
     UsuarioFactory,
+    ProfesorFactory,
     TipoUsuarioFactory,
     TipoUsuarioxUsuarioFactory } = require('../models/models');
 
@@ -16,6 +17,7 @@ const {
 //Definimos las tablas
 const Administrador = AdministradorFactory(sequelize, DataTypes);
 const Usuario = UsuarioFactory(sequelize, DataTypes);
+const Profesor = ProfesorFactory(sequelize, DataTypes);
 const TipoUsuario = TipoUsuarioFactory(sequelize, DataTypes);
 const TipoUsuarioxUsuario = TipoUsuarioxUsuarioFactory(sequelize, DataTypes);
 const Estudiante = EstudianteFactory(sequelize, DataTypes);
@@ -29,6 +31,11 @@ const Rol_Administrador = RolAdministradorFactory(sequelize, DataTypes);
 //Relacion entre Estudiante y Usuario
 Usuario.hasOne(Estudiante, { foreignKey: 'fk_usuario' });
 Estudiante.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
+
+//Relacion entre Profesor y Usuario
+Usuario.hasOne(Profesor, { foreignKey: 'fk_usuario' });
+Profesor.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
+
 
 //Relacion entre Usuario y Tipo UsuarioxUsuario
 TipoUsuarioxUsuario.belongsTo(Estudiante, { foreignKey: 'fk_usuario' });
@@ -58,6 +65,7 @@ module.exports = {
     Administrador,
     Estudiante,
     Institucion,
+    Profesor,
     Rol_Administrador,
     sequelize,
     TipoInstitucion,

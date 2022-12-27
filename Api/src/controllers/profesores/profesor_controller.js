@@ -1,5 +1,6 @@
 const { response, request } = require('express');
-const { Institucion, TipoInstitucion } = require('../../config/modelsdb');
+const { Usuario, Profesor } = require('../../config/modelsdb');
+
 //metodo para obtener los profesores
 const profesoresGet = async(req = request, res = response) => {
     res.json({

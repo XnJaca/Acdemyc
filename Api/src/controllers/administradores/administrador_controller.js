@@ -160,10 +160,41 @@ const administradoresPut = async (req = request, res = response) => {
             //Actualizamos el tipo_usuario_x_usuario
             await tipo_usuario.update(resto, { transaction: t });
 
+            //Buscamos el administrador usuario actualizado
+            const administradorActualizado = await Administrador.findOne({
+                where: { fk_usuario: id },
+                include: [
+                    {
+                        model: Usuario,
+                        as: 'usuario',
+                        attributes: ['id', 'cedula', 'nombre', 'apellidos', 'fecha_nacimiento', 'genero', 'email', 'clave', 'telefono', 'celular', 'direccion', 'fk_institucion', 'estado', 'imagen'],
+                        include: [
+                            {
+                                model: TipoUsuarioxUsuario,
+                                as: 'tipo_usuario',
+                                attributes: ['id', 'fk_usuario', 'fk_tipo_usuario'],
+                                include: [
+                                    {
+                                        model: TipoUsuario,
+                                        as: 'tipo_usuario',
+                                        attributes: ['id', 'nombre']
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        model: RolAdministrador,
+
+                        as: 'rol_administrador',
+                        attributes: ['id', 'nombre']
+                    }
+                ]
+            });
+
+
             return {
-                usuario,
-                administrador,
-                tipo_usuario
+                administrador: administradorActualizado
             }
 
         });

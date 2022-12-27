@@ -2,10 +2,43 @@ const { response, request } = require('express');
 const bycript = require('bcryptjs');
 const { Usuario, Estudiante, TipoUsuarioxUsuario, sequelize } = require('../../config/modelsdb');
 
+const estudiantesGetById = async (req = request, res = response) => {
+    //Obtenemos el usaurio que viene en el di
+    const estudiante = await Estudiante.findOne({
+        where: { fk_usuario: req.query.id },
+        include: [{
+            model: Usuario,
+            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'telefono', 'direccion', 'estado', 'fk_institucion'],
+            where: { estado: 1, fk_institucion: req.header('fk_institucion') },
+        },
+        {
+            model: TipoUsuarioxUsuario,
+            attributes: ['fk_tipo_usuario', 'fk_usuario']
+        }]
+    });
+
+    if (estudiante == null) {
+
+        return res.status(400).json({
+            msg: 'No existe un estudiante con el id ' + req.query.id
+        });
+    }
+
+    res.json({
+        estudiante
+    })
+
+}
+
 //METODO PARA OBTENER TODOS LOS ESTUDIANTES
 const estudiantesGet = async (req = request, res = response) => {
     //Obtener el fk_institucion. que viene en el header
     const fk_institucion = req.header('fk_institucion');
+    //Obtenemos el id que viene en el request
+    if (req.query.id) {
+        estudiantesGetById(req, res, req.param.id, fk_institucion);
+        return
+    }
 
     if (fk_institucion == null) {
         return res.status(400).json({
