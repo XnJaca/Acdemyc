@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
+//Traemos la conexion a la bd
 const {sequelize} = require('./db_config');
 
 const {
@@ -36,11 +37,30 @@ Estudiante.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
 Usuario.hasOne(Profesor, { foreignKey: 'fk_usuario' });
 Profesor.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
 
+//Relacion entre Estudiante y Institucion
+Institucion.hasOne(Estudiante, { foreignKey: 'fk_institucion' });
+Estudiante.belongsTo(Institucion, { foreignKey: 'fk_institucion' });
 
-//Relacion entre Usuario y Tipo UsuarioxUsuario
+//Relacion entre Institucion y Tipo Institucion
+TipoInstitucion.hasOne(Institucion, { foreignKey: 'fk_tipo_institucion' });
+Institucion.belongsTo(TipoInstitucion, { foreignKey: 'fk_tipo_institucion' });
+
+//Relacion entre Usuario y Tipo Usuario
+Usuario.hasOne(TipoUsuario, { foreignKey: 'id' });
+TipoUsuario.belongsTo(Usuario, { foreignKey: 'fk_tipo_usuario' });
+
+//Relacion entre Profesor y Tipo UsuarioxUsuario
+TipoUsuarioxUsuario.belongsTo(Profesor, { foreignKey: 'fk_usuario' });
+Profesor.hasOne(TipoUsuarioxUsuario, { foreignKey: 'fk_usuario' });
+
+//Relacion entre Tipo Usuario y Profesor
+TipoUsuario.hasOne(TipoUsuarioxUsuario, { foreignKey: 'fk_tipo_usuario' });
+TipoUsuarioxUsuario.belongsTo(TipoUsuario, { foreignKey: 'id' });
+
+
+//Relacion entre Estudiante y Tipo UsuarioxUsuario
 TipoUsuarioxUsuario.belongsTo(Estudiante, { foreignKey: 'fk_usuario' });
 Estudiante.hasOne(TipoUsuarioxUsuario, { foreignKey: 'fk_usuario' });
-
 
 //Relacion entre Admnistrador y Usuario
 Usuario.hasOne(Administrador, { foreignKey: 'fk_usuario' });

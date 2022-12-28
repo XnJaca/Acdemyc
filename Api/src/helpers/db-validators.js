@@ -35,7 +35,7 @@ const isEstudiante = async (tipo_usuario = '') => {
 // PROFESOR HELPERS
 const isProfesor = async (tipo_usuario = '') => {
     const existeTipoUsuario = await TipoUsuario.findByPk(tipo_usuario);
-    if (existeTipoUsuario.id != 2) {
+    if (existeTipoUsuario.id != 3) {
         throw new Error(`El tipo de usuario debe ser profesor.`);
     }
 }
@@ -48,10 +48,7 @@ const isAdmin = async (tipo_usuario = '') => {
     }
 }
 
-
-
-
-
+// TIPO USUARIO HELPERS
 const verificarTipoUsuario = async (tipoUsuario = '') => {
     const existeTipoUsuario = await TipoUsuario.findByPk(tipoUsuario);
     if (!existeTipoUsuario) {

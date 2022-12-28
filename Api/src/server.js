@@ -13,7 +13,7 @@ class Server {
             this.estudiantesPath = '/api/estudiantes';
             this.institucionesPath = '/api/instituciones';
             this.administradorPath = '/api/administrador';
-            // this.roladministradorPath =- '/api/roladministrador';
+            this.profesoresPath = '/api/profesores';
             this.tipo_institucionPath = '/api/tipoinstitucion';
 
             // Middlewares
@@ -41,7 +41,7 @@ class Server {
             this.app.use( this.roladministradorPath, require('./routes/roles/rol_administrador_route') );
             this.app.use( this.estudiantesPath, require('./routes/usuarios/estudiante_route') );
             this.app.use( this.administradorPath, require('./routes/usuarios/administrador_route') );
-            // this.app.use( this.roladministradorPath, require('./routes/roles/roladministrador_route') );
+            this.app.use( this.profesoresPath, require('./routes/usuarios/profesor_route') );
             this.app.use( this.institucionesPath, require('./routes/instituciones/institucion_route') );
             this.app.use( this.tipo_institucionPath, require('./routes/instituciones/tipo_institucion_route') );
         }
