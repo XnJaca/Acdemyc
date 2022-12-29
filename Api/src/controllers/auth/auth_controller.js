@@ -33,8 +33,10 @@ const login = async (req = request, res = response) => {
                 msg: 'Usuario no activo'
             })
         }
-        // Verificar si la clave es correcta
-        const validPassword = bycript.compareSync(clave, usuario.clave);
+        
+        //Comparar la clave de usuario
+        const validPassword = bycript.compareSync(clave + "", usuario.clave);
+
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
