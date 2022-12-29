@@ -46,8 +46,8 @@ TipoInstitucion.hasOne(Institucion, { foreignKey: 'fk_tipo_institucion' });
 Institucion.belongsTo(TipoInstitucion, { foreignKey: 'fk_tipo_institucion' });
 
 //Relacion entre Usuario y Tipo Usuario
-Usuario.hasOne(TipoUsuario, { foreignKey: 'id' });
-TipoUsuario.belongsTo(Usuario, { foreignKey: 'fk_tipo_usuario' });
+// Usuario.hasOne(TipoUsuario, { foreignKey: 'id' });
+// TipoUsuario.belongsTo(Usuario, { foreignKey: 'fk_tipo_usuario' });
 
 //Relacion entre Profesor y Tipo UsuarioxUsuario
 TipoUsuarioxUsuario.belongsTo(Profesor, { foreignKey: 'fk_usuario' });
