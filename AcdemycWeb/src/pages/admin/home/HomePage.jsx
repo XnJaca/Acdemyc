@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { InfoUserContent,Calendario } from '../../components';
+import { Calendario, InfoUserContent } from '../../../components';
+ 
 
 export const HomePage = () => {
   return (

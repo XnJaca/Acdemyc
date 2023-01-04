@@ -29,7 +29,7 @@ export const EventModal = () => {
 
     const { isDateModalOpen, onOpenModal, onCloseModal } = useUiStore()
     const { activeEvent, startSavingEvent, isLoading } = useCalendarStore();
-    const { user } = useAuthStore()
+    const { user, tipoUsuario } = useAuthStore()
 
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [selectColor, setSelectColor] = useState(false)
@@ -70,7 +70,7 @@ export const EventModal = () => {
             ...formValue,
             [changing]: event,
         })
-    } 
+    }
 
     const onCloseModalEvent = () => {
         setSelectColor(false)
@@ -90,7 +90,7 @@ export const EventModal = () => {
         }
 
         if (formValue.title.length <= 0) return;
-        
+
         console.log({ ...formValue, style })
         await startSavingEvent({ ...formValue, style });
 
@@ -103,7 +103,7 @@ export const EventModal = () => {
         setSelectColor(false)
     }
 
-    const selectedColor = (e) => {  
+    const selectedColor = (e) => {
         console.log(e.target.style.border.length)
 
         if (e.target.style.border.length === 0 && !selectColor) {
@@ -116,10 +116,12 @@ export const EventModal = () => {
         } else if (e.target.style.border.length !== 0) {
 
             e.target.style.border = '';
-            setSelectColor(false) 
+            setSelectColor(false)
             setStyle('#347CF7');
         }
     }
+
+    var disabled = tipoUsuario.descripcion === 'ADMINISTRADOR' ? false : true;
 
     //*Para manejar el disabled del button
     // var loading
@@ -134,7 +136,7 @@ export const EventModal = () => {
 
     return (
         <div>
-  
+
             <Modal
                 isOpen={isDateModalOpen}
                 onRequestClose={onCloseModalEvent}
@@ -156,6 +158,7 @@ export const EventModal = () => {
                             dateFormat='Pp'//para que aparezcan las horas
                             showTimeSelect
                             locale='es'
+                            disabled={disabled}
                             timeCaption='Hora'
                         />
                     </div>
@@ -170,6 +173,7 @@ export const EventModal = () => {
                             dateFormat='Pp'//para que aparezcan las horas
                             showTimeSelect
                             locale='es'
+                            disabled={disabled}
                             timeCaption='Hora'
                         />
                     </div>
@@ -183,6 +187,7 @@ export const EventModal = () => {
                             placeholder="Título del evento"
                             name="title"
                             autoComplete="off"
+                            disabled={disabled}
                             value={formValue.title}
                             onChange={onInputChanged}
                         />
@@ -196,6 +201,7 @@ export const EventModal = () => {
                             placeholder="Notas"
                             rows="5"
                             name="notes"
+                            disabled={disabled}
                             value={formValue.notes}
                             onChange={onInputChanged}
                         ></textarea>
@@ -210,44 +216,53 @@ export const EventModal = () => {
                                 style={{ backgroundColor: '#f02525' }}
                                 className='buttonColor'
                                 type='button'
+                                disabled={disabled}
                                 onClick={selectedColor}
                             ></button>
                             <button
                                 style={{ backgroundColor: '#347CF7' }}
                                 className='buttonColor'
                                 type='button'
+                                disabled={disabled}
                                 onClick={selectedColor}
                             ></button>
                             <button
                                 style={{ backgroundColor: '#f2aa58' }}
                                 className='buttonColor'
                                 type='button'
+                                disabled={disabled}
                                 onClick={selectedColor}
                             ></button>
                             <button
                                 style={{ backgroundColor: '#71e532' }}
                                 className='buttonColor'
                                 type='button'
+                                disabled={disabled}
                                 onClick={selectedColor}
                             ></button>
                             <button
                                 style={{ backgroundColor: '#c841f6' }}
                                 className='buttonColor'
                                 type='button'
+                                disabled={disabled}
                                 onClick={selectedColor}
                             ></button>
                         </div>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="btn btn-outline-primary btn-block"
-                        disabled={false}
-                    >
-                        <i className="fa far fa-save"></i>
-                        <span> Guardar</span>
-                    </button>
+                    {
+                        (tipoUsuario.descripcion === 'ADMINISTRADOR') && (
+                            <button
+                                type="submit"
+                                className="btn btn-outline-primary btn-block"
+                                disabled={false}
+                            >
+                                <i className="fa far fa-save"></i>
+                                <span> Guardar</span>
+                            </button>
 
+                        )
+                    }
                 </form>
             </Modal>
         </div>

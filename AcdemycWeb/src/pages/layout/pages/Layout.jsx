@@ -35,7 +35,6 @@ export const Layout = () => {
 
       <div className="container">
 
-
         {
           //* Aqui lo que hacemos es cargar el componente de cargado cada vez
           //* que en la store este el loading en true o el mismo checking

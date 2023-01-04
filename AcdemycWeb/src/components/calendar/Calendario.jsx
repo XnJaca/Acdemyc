@@ -11,7 +11,8 @@ import { CalendarEvent } from './components/CalendarEvent';
 
 export const Calendario = () => {
 
-    const { user } = useAuthStore()
+    const { user, tipoUsuario } = useAuthStore();
+
     const { onOpenModal } = useUiStore();
 
     const { events, setActiveEvent, startLoadingEvents, calendarActive, calendarList } = useCalendarStore();
@@ -62,7 +63,7 @@ export const Calendario = () => {
             }
         });
         onOpenModal();
-    };  
+    };
 
     return (
 
@@ -71,9 +72,13 @@ export const Calendario = () => {
                 <h2>Calendario</h2>
             </div>
 
-            <div className='d-flex justify-content-start mb-3'>
-                <button onClick={OpenModalEvent} className='btn btn-primary'>Agregar Evento al Calendario</button>
-            </div> 
+            {
+                (tipoUsuario.descripcion === 'ADMINISTRADOR') && (
+                    <div className='d-flex justify-content-start mb-3'>
+                        <button onClick={OpenModalEvent} className='btn btn-primary'>Agregar Evento al Calendario</button>
+                    </div>
+                )
+            }  
 
             <Calendar
                 culture='es'
@@ -93,7 +98,8 @@ export const Calendario = () => {
                 onView={onViewChanged}
             />
 
-            <EventModal /> 
+            <EventModal />
+
         </div>
 
     )

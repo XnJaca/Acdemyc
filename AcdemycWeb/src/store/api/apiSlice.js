@@ -11,9 +11,17 @@ export const apiSlice = createSlice({
         onLoad: (state) => {
             state.status = true;
         },
+        onCloseLoad: (state) => {
+            state.status = false;
+        },
         onGetData: (state, { payload = [] }) => { 
             state.status = false;
             state.data = payload;
+            state.errorMessage = undefined;
+        },
+        onAddNewData: (state, { payload = {} }) => {
+            state.status = false;
+            state.data.push(payload);
             state.errorMessage = undefined;
         },
         onUpdateData: (state, { payload = [] }) => {
@@ -33,4 +41,6 @@ export const {
     onGetData,
     onUpdateData,
     onError,
+    onAddNewData,
+    onCloseLoad,
 } = apiSlice.actions

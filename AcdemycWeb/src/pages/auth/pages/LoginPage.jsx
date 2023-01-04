@@ -15,7 +15,7 @@ export const LoginPage = () => {
     const onRegisterSubmit = (e) => {
         e.preventDefault();
         console.log('Loggeando'); 
-        startLogin({email: loginEmail, password: loginPassword, first: true});
+        startLogin({cedula: loginEmail, clave: loginPassword, first: true});
     } 
 
     return (
@@ -28,7 +28,7 @@ export const LoginPage = () => {
                             <div className="card login-form mb-0">
                                 <div className="card-body pt-5">
                                     <div className='d-flex justify-content-center mb-3'>
-                                        <img className='icon_w_100' src="/500x500-bg-transparent.png" alt="AcdemycIcon" />
+                                        <img className='icon_w_100' src="/icons/500x500-bg-transparent.png" alt="AcdemycIcon" />
                                     </div>
                                     <a className="text-center" href="#"> <h4>Login</h4></a>
                                     <form onSubmit={onRegisterSubmit} className="mt-5 mb-5 login-input">
@@ -36,7 +36,7 @@ export const LoginPage = () => {
                                             <input 
                                             className="form-control" 
                                             placeholder="Email" 
-                                            type="email" 
+                                            type="text" 
                                             name='loginEmail'
                                             value={loginEmail}
                                             onChange={onLoginInputChange}                                            />
@@ -51,7 +51,7 @@ export const LoginPage = () => {
                                             onChange={onLoginInputChange}  
                                             />
                                         </div>
-                                        <button type="submit" className="btn login-form__btn submit w-100">Inciar Sesion</button>
+                                        <button type="submit" className="btn login-form__btn submit w-100 hover_primary">Inciar Sesion</button>
                                     </form>
                                     <p className="mt-5 login-form__footer">No tienes Cuenta? <a href="#" className="text-primary">Crear Cuenta</a></p>
                                 </div>

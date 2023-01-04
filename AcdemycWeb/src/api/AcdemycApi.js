@@ -4,7 +4,7 @@ import axios from 'axios';
 // const { VITE_API_URL } = getEnvVariables();
 
 const acdemycApi = axios.create({//se cambia la variable para que sea local
-    baseURL: 'https://acdemyc-production.up.railway.app/api/'
+    baseURL: 'https://acdemyc-production.up.railway.app/api'
     //baseURL: VITE_API_URL
 }) 
 
@@ -14,7 +14,7 @@ acdemycApi.interceptors.request.use(config => {
     config.headers = {
         ...config.headers,
         // 'x-token': localStorage.getItem('token'),
-        // 'uid': localStorage.getItem('uid')
+        'fk_institucion': localStorage.getItem('fk_institucion')
     }
     return config;
 })
