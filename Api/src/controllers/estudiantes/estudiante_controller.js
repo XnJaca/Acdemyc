@@ -172,7 +172,6 @@ const estudiantesPut = async (req = request, res = response) => {
             await estudiante.update(resto, { transaction: t });
 
             return {
-                usuario,
                 estudiante
             }
         });
