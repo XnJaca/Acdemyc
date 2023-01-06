@@ -14,12 +14,14 @@ const login = async (req = request, res = response) => {
         // Consultar el tipo de usuario
         let tipo_usuario = await TipoUsuarioxUsuario.findOne({ where: { fk_usuario: usuario.id } });
         tipo_usuario = await TipoUsuario.findByPk(tipo_usuario.fk_tipo_usuario);
-        let rol_administrador = await Administrador.findOne({where : {fk_usuario : usuario.id}});
-        rol_administrador = await Rol_Administrador.findByPk(rol_administrador.fk_rol_administrador);
-
-        //Mostrar el tipo de usuario
-        console.log("ROOOOL ADMINNNN",rol_administrador);
-
+        
+        let rol_administrador = '';
+        if (tipo_usuario == 0) {
+            rol_administrador = await Administrador.findOne({where : {fk_usuario : usuario.id}});
+            rol_administrador = await Rol_Administrador.findByPk(rol_administrador.fk_rol_administrador);
+            
+        }
+        
         if (!usuario) {
             return res.status(400).json({
                 ok: false,
@@ -67,7 +69,7 @@ const login = async (req = request, res = response) => {
             tipo_usuario: {
                 id: tipo_usuario.id,
                 descripcion: tipo_usuario.descripcion,
-                rol_administrador: rol_administrador.descripcion
+                rol_administrador: (rol_administrador == "") ? "N/A" : rol_administrador.descripcion
             },
             token
         })
