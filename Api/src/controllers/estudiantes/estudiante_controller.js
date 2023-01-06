@@ -136,6 +136,7 @@ const estudiantesPost = async (req = request, res = response) => {
 const estudiantesPut = async (req = request, res = response) => {
     const { id } = req.params;
     const { _id, ...resto } = req.body;
+    const fk_institucion = req.header('fk_institucion');
 
     //creamos una transaccion para actualizar el usuario
     try {
