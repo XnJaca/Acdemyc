@@ -11,6 +11,12 @@ const login = async (req = request, res = response) => {
     try {
         // Verificar si la cedula existe
         const usuario = await Usuario.findOne({ where: { cedula } });
+        if(usuario == null){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Cedula no encontrada'
+            })
+        }
         // Consultar el tipo de usuario
         let tipo_usuario = await TipoUsuarioxUsuario.findOne({ where: { fk_usuario: usuario.id } });
         tipo_usuario = await TipoUsuario.findByPk(tipo_usuario.fk_tipo_usuario);
@@ -19,8 +25,10 @@ const login = async (req = request, res = response) => {
         if (tipo_usuario == 0) {
             rol_administrador = await Administrador.findOne({where : {fk_usuario : usuario.id}});
             rol_administrador = await Rol_Administrador.findByPk(rol_administrador.fk_rol_administrador);
-            
         }
+
+        // TODO: BUSCAR EL TIPO DE USUARIO Y RETORNAR UNA RESPUESTA EN BASE A 
+
         
         if (!usuario) {
             return res.status(400).json({
