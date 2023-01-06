@@ -1,6 +1,6 @@
 const { response, request } = require('express');
 const bcrypt = require('bcryptjs');
-const { Usuario } = require('../../config/modelsdb');
+const { Usuario, TipoUsuarioxUsuario } = require('../../config/modelsdb');
 
 //Get Usuario by Cedula
 
