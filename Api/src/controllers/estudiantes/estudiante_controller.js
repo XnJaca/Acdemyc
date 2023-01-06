@@ -154,9 +154,17 @@ const estudiantesPut = async (req = request, res = response) => {
             //Actualizamos el usuario
             await usuario.update(resto, { transaction: t });
 
-            //Buscamos el estudiante
+            //Buscamos el usuario 
             const estudiante = await Estudiante.findOne({
-                where: { fk_usuario: id }
+                include: [{
+                    model: Usuario,
+                    attributes: ['nombre', 'apellidos', 'email', 'cedula', 'telefono', 'direccion', 'estado', 'fk_institucion'],
+                    where: { estado: 1, fk_institucion: fk_institucion },
+                },
+                {
+                    model: TipoUsuarioxUsuario,
+                    attributes: ['fk_tipo_usuario', 'fk_usuario']
+                }]
             });
 
             //Actualizamos el estudiante
