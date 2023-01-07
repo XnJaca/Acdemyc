@@ -8,7 +8,7 @@ const estudiantesGetById = async (req = request, res = response) => {
         where: { fk_usuario: req.query.id },
         include: [{
             model: Usuario,
-            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'telefono', 'direccion', 'estado', 'fk_institucion'],
+            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
             where: { estado: 1, fk_institucion: req.header('fk_institucion') },
         },
         {
