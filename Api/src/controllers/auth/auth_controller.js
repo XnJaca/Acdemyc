@@ -22,7 +22,7 @@ const login = async (req = request, res = response) => {
         tipo_usuario = await TipoUsuario.findByPk(tipo_usuario.fk_tipo_usuario);
         
         let rol_administrador = '';
-        if (tipo_usuario == 0) {
+        if (tipo_usuario.id == 0) {
             rol_administrador = await Administrador.findOne({where : {fk_usuario : usuario.id}});
             rol_administrador = await Rol_Administrador.findByPk(rol_administrador.fk_rol_administrador);
         }
