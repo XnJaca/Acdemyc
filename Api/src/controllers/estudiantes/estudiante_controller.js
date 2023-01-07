@@ -49,7 +49,7 @@ const estudiantesGet = async (req = request, res = response) => {
     const estudiantes = await Estudiante.findAll({
         include: [{
             model: Usuario,
-            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'telefono', 'direccion', 'estado', 'fk_institucion'],
+            attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
             where: { estado: 1, fk_institucion: fk_institucion },
         },
         {
