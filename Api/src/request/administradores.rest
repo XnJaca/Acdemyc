@@ -21,7 +21,6 @@ fk_institucion: 1
 POST http://localhost:8080/api/administradores HTTP/1.1 
 Content-Type: application/json
 fk_institucion: 1
-rol_admin: 0
 
 {
     "cedula": "0000000000",

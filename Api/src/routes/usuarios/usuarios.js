@@ -17,6 +17,7 @@ const router = Router();
 
 // Create routes
 router.post('/', [
+    validarJWT,
     isAdminRole,
     check('cedula', 'La cedula es obligatoria').not().isEmpty(),
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
@@ -36,11 +37,11 @@ router.post('/', [
 ], usuarioController.save);
 
 router.get('/', [
-    isAdminRole,
 ], usuarioController.getAll);
 
 
 router.put('/:id', [
+    validarJWT,
     isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
@@ -50,6 +51,7 @@ router.put('/:id', [
 ], usuarioController.update);
 
 router.delete('/:id', [
+    validarJWT,
     isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),

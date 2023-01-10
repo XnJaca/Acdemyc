@@ -18,6 +18,7 @@ const router = Router();
 
 // Ruta para guardar
 router.post('/', [
+    validarJWT,
     isAdminRole,
     check('cedula', 'La cedula es obligatoria').not().isEmpty(),
     check('cedula', 'La cedula debe ser numerica').isNumeric(),
@@ -43,6 +44,7 @@ router.post('/', [
 
 // Ruta para buscar todos
 router.get('/', [
+    validarJWT,
     isAdminRole,
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
     check('estado', 'El estado es obligatorio.').not().isEmpty(),
@@ -51,6 +53,7 @@ router.get('/', [
 
 // Ruta para actualizar
 router.put('/:id', [
+    validarJWT,
     isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
@@ -61,6 +64,7 @@ router.put('/:id', [
 
 // Ruta para eliminar
 router.delete('/:id', [
+    validarJWT,
     isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
