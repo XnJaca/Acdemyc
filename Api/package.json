@@ -1,10 +1,10 @@
 {
   "name": "acdemycapi",
   "version": "1.0.0",
-  "description": "Api sistema educacional",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
   "author": "xnjaca",

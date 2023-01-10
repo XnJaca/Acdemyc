@@ -1,56 +1,68 @@
+//Require express
 const express = require('express');
+//Require cors
 const cors = require('cors');
-//TODO: INTENTAR LLAMAR AL DOTENV DESDE AQUI
+//Rquiere dotenv
+require('dotenv').config();
 
+//Create express server
 class Server {
-        constructor() {
-            this.app = express();
-            this.port = process.env.PORT;
+    constructor() {
+        this.app = express();
+        this.port = process.env.PORT;
 
-            this.authPath = '/api/auth';
-            this.usuariosPath = '/api/usuarios';
-            this.roladministradorPath = '/api/roladministrador';
-            this.estudiantesPath = '/api/estudiantes';
-            this.institucionesPath = '/api/instituciones';
-            this.administradorPath = '/api/administrador';
-            this.profesoresPath = '/api/profesores';
-            this.tipo_institucionPath = '/api/tipoinstitucion';
+        //Llamamos a las rutas
+        this.route_path = require('./routes/routes_paths');
 
-            // Middlewares
-            this.middlewares();
-    
-            // Rutas de mi aplicación
-            this.routes();
-        }
-    
-        middlewares() {
-    
-            // CORS
-            this.app.use( cors() );
-    
-            // Lectura y parseo del body
-            this.app.use( express.json() );
-    
-            // Directorio público
-            this.app.use( express.static('public') );
-        }
-    
-        routes() {
-            this.app.use( this.authPath, require('./routes/auth_route') );
-            this.app.use( this.usuariosPath, require('./routes/usuarios/usuario_route') );
-            this.app.use( this.roladministradorPath, require('./routes/roles/rol_administrador_route') );
-            this.app.use( this.estudiantesPath, require('./routes/usuarios/estudiante_route') );
-            this.app.use( this.administradorPath, require('./routes/usuarios/administrador_route') );
-            this.app.use( this.profesoresPath, require('./routes/usuarios/profesor_route') );
-            this.app.use( this.institucionesPath, require('./routes/instituciones/institucion_route') );
-            this.app.use( this.tipo_institucionPath, require('./routes/instituciones/tipo_institucion_route') );
-        }
-    
-        listen() {
-            this.app.listen( this.port, () => {
-                console.log('Servidor corriendo en puerto', this.port);
-            });
-        }
+        //Middlewares
+        this.middlewares();
+
+        //Routes
+        this.routes();
+    }
+
+    middlewares() {
+        //CORS
+        this.app.use(cors());
+
+        //Parse and read body
+        this.app.use(express.json());
+
+        //Public directory
+        this.app.use(express.static('public'));
+    }
+
+    routes() {
+        //Use route login
+        this.app.use(this.route_path.login, require('./routes/auth/login'));
+        //Use route register
+        // this.app.use(this.route_path.register, require('./routes/auth/register'));
+        //Use route usuarios
+        this.app.use(this.route_path.usuarios, require('./routes/usuarios/usuarios'));
+        //Use route administradores
+        this.app.use(this.route_path.administradores, require('./routes/usuarios/administradores'));
+        //Use route roladministrador
+        // this.app.use(this.route_path.rolAdmin, require('./routes/usuarios/roladministrador'));
+        //Use route estudiantes
+        this.app.use(this.route_path.estudiantes, require('./routes/usuarios/estudiantes'));
+        //Use route encargados
+        this.app.use(this.route_path.encargados, require('./routes/usuarios/encargados'));
+        //Use route profesores
+        // this.app.use(this.route_path.profesores, require('./routes/usuarios/profesores'));
+        //Use route tipoinstitucion
+        // this.app.use(this.route_path.tipo_instituciones, require('./routes/instituciones/tipoinstitucion'));
+        //Use route instituciones
+        // this.app.use(this.route_path.instituciones, require('./routes/instituciones/instituciones'));
+        //Use route cursos
+        // this.app.use(this.routes.cursos, require('./routes/materias/cursos'));
+        //Use route materias
+        // this.app.use(this.route_path.materias, require('./routes/materias/materias'));
+    }
+
+    listen() {
+        this.app.listen(this.port, () => {
+            console.log('Server running on port', this.port);
+        });
+    }
 }
-
 module.exports = Server;
