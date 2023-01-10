@@ -16,8 +16,7 @@ const isAdminRole = (req = request, res = response) => {
         })
     }
     
-
-    return req.usuario;
+    next();
 }
 
 
