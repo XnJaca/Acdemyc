@@ -167,7 +167,7 @@ estudianteController.update = async (req = request, res = response) => {
         });
 
         // Buscamos el estudiante actualizado sin la clave
-        const estudianteActualizado = await Estudiante.findOne({
+        const result = await Estudiante.findOne({
             where: { fk_usuario: id },
             include: [{
                 model: Usuario,
@@ -182,7 +182,7 @@ estudianteController.update = async (req = request, res = response) => {
 
         //Enviamos la respuesta.
         res.json({
-            estudianteActualizado
+            result
         });
 
     } catch (error) {
@@ -217,23 +217,9 @@ estudianteController.delete = async (req = request, res = response) => {
             );
         });
 
-        // Buscamos el usuario estudiante actualizado
-        const estudianteActualizado = await Estudiante.findOne({
-            where: { fk_usuario: id },
-            include: [{
-                model: Usuario,
-                attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
-                where: { fk_institucion: fk_institucion },
-            },
-            {
-                model: TipoUsuarioxUsuario,
-                attributes: ['fk_tipo_usuario']
-            }]
-        });
-
         //Enviamos la respuesta.
         res.json({
-            estudianteActualizado
+            msg: 'Usuario eliminado correctamente'
         });
 
     } catch (error) {

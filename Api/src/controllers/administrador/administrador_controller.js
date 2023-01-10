@@ -3,7 +3,7 @@ const { response, request } = require('express');
 //Require encriptar
 const { encriptar } = require('../../helpers/encriptar');
 //Require usuario
-const { Usuario, Administrador, TipoUsuarioxUsuario, RolAdmin,RolInstitucion, sequelize } = require('../../config/models_sync');
+const { Usuario, Administrador, TipoUsuarioxUsuario, RolAdmin, RolInstitucion, sequelize } = require('../../config/models_sync');
 
 //Creamos el controlador
 const administradorController = {};
@@ -25,7 +25,7 @@ administradorController.save = async (req = request, res = response) => {
             const RolAdministrador = await RolAdmin.create({ fk_administrador: administrador.fk_usuario, fk_rol_institucion: req.body.rol }, { transaction: t });
             // Buscamos el rol_institucion
             const rol_institucion = await RolInstitucion.findOne({ where: { fk_institucion: req.body.fk_institucion, fk_institucion: req.body.rol }, attributes: ['descripcion', 'fk_institucion'] });
-            
+
             //Retornamos
             return {
                 usuario,
@@ -189,7 +189,7 @@ administradorController.update = async (req = request, res = response) => {
         });
 
         // Buscamos el administrador actualizado
-        const administrador = await Administrador.findOne({
+        const result = await Administrador.findOne({
             where: {
                 fk_usuario: id
             },
@@ -210,8 +210,8 @@ administradorController.update = async (req = request, res = response) => {
         });
 
         //Enviamos la respuesta
-        res.json({
-            administrador
+        res.status(200).json({
+            result
         });
 
     }
@@ -246,7 +246,7 @@ administradorController.delete = async (req = request, res = response) => {
 
             // Enviamos la respueta
             res.json({
-                msg: 'Administrador eliminado'
+                msg: 'Usuario eliminado correctamente'
             });
         });
     } catch (error) {
