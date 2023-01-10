@@ -3,7 +3,7 @@ const { Router } = require('express');
 // Require check
 const { check } = require('express-validator');
 // Require validateFields
-const { validateFields,validarRoles } = require('../../middlewares/middlewares');
+const { validateFields, validarJWT, isAdminRole } = require('../../middlewares/')
 // Require validators
 const { existUserById, existUserByCedula, existUserByCorreo, isAdmin, existAdmin, existRolInstitucion } = require('../../helpers/validators')
 
@@ -18,7 +18,7 @@ const router = Router();
 
 // Ruta para guardar
 router.post('/', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('cedula', 'La cedula es obligatoria').not().isEmpty(),
     check('cedula', 'La cedula debe ser numerica').isNumeric(),
     check('cedula', 'Ya existe un usuario con este numero de cedula.').custom(existUserByCedula),
@@ -38,34 +38,35 @@ router.post('/', [
     check('tipo_usuario', 'El tipo de usuario es obligatorio').not().isEmpty(),
     check('tipo_usuario', 'El tipo de usuario no es valido').custom(isAdmin),
     check('rol', 'El rol de administrador no existe.').custom(existRolInstitucion),
-     validateFields.validateFields
+    validateFields
 ], administradorController.save);
 
 // Ruta para buscar todos
 router.get('/', [
+    isAdminRole,
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
     check('estado', 'El estado es obligatorio.').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], administradorController.getAll);
 
 // Ruta para actualizar
 router.put('/:id', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('id', 'El encargado que intenta modificar no existe.').custom(existAdmin),
     check('fk_institucion', 'El fk_institucion es obligatorio').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], administradorController.update);
 
 // Ruta para eliminar
 router.delete('/:id', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('id', 'El administrador que intenta eliminar no existe.').custom(existAdmin),
     check('fk_institucion', 'El fk_institucion es obligatorio').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], administradorController.delete);
 
 

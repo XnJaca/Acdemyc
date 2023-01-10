@@ -106,7 +106,7 @@ estudianteController.getAll = async (req = request, res = response) => {
         });
     }
     //Enviamos los usuarios
-    res.json(estudiantes);
+    res.json({estudiantes});
 }
 
 //Creamos el metodo para buscar por id

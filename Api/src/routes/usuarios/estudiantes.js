@@ -2,8 +2,8 @@
 const { Router } = require('express');
 // Require check
 const { check } = require('express-validator');
-// Require validateFields
-const { validateFields, validarRoles } = require('../../middlewares/middlewares');
+// Require validators
+const { validateFields, isAdminRole } = require('../../middlewares/')
 // Require validators
 const {existUserByCedula,existUserByCorreo,existUserById,isEstudiante, isAdmin, existEstudiante } = require('../../helpers/validators')
 
@@ -17,7 +17,7 @@ const router = Router();
 
 // Ruta para guardar
 router.post('/', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('cedula', 'La cedula es obligatoria').not().isEmpty(),
     check('cedula', 'La cedula debe ser numerica').isNumeric(),
     check('cedula', 'Ya existe un usuario con este numero de cedula.').custom(existUserByCedula),
@@ -35,33 +35,34 @@ router.post('/', [
     check('tipo_usuario', 'El tipo de usuario es obligatorio').not().isEmpty(),
     check('tipo_usuario', 'El tipo de usuario no es valido').isNumeric(),
     check('tipo_usuario', 'El tipo de usuario debe ser Estudiante.').custom(isEstudiante),
-    validateFields.validateFields
+    validateFields
 ], estudianteController.save);
 
 
 router.get('/',[
+    isAdminRole,
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
     check('estado', 'El estado es obligatorio.').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], estudianteController.getAll);
 
 // Ruta para actualzar
 router.put('/:id', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existEstudiante),
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], estudianteController.update);
 
 // Ruta para eliminar
 router.delete('/:id', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
     check('tipo_usuario').custom(isAdmin),
-    validateFields.validateFields
+    validateFields
 ], estudianteController.delete);
 
 // Exportamos

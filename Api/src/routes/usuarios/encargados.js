@@ -17,7 +17,7 @@ const router = Router();
 
 // Ruta para guardar
 router.post('/', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('cedula', 'La cedula es obligatoria').not().isEmpty(),
     check('cedula', 'La cedula debe ser numerica').isNumeric(),
     check('cedula', 'Ya existe un usuario con este numero de cedula.').custom(existUserByCedula),
@@ -39,34 +39,35 @@ router.post('/', [
     check('tipo_usuario', 'El tipo de usuario debe ser encargado.').custom(isEncargado),
     check('fk_estudiante', 'El fk_estudiante es obligatorio.').not().isEmpty(),
     check('fk_estudiante', 'El estudiante no existe').custom(existEstudiante),
-    validateFields.validateFields
+    validateFields
 ], encargadoController.save);
 
 // Ruta para buscar todos
 router.get('/', [
+    isAdminRole,
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
     check('estado', 'El estado es obligatorio.').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], encargadoController.getAll);
 
 // Ruta para actualizar
 router.put('/:id', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('id', 'El encargado que intenta modificar no existe.').custom(existEncargado),
     check('fk_institucion', 'El fk_institucion es obligatorio').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], encargadoController.update);
 
 // Ruta para eliminar
 router.delete('/:id', [
-    validarRoles.isAdminRole,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('fk_institucion', 'El fk_institucion es obligatorio').not().isEmpty(),
     check('id', 'El encargado que intenta eliminar no existe.').custom(existEncargado),    
-    validateFields.validateFields
+    validateFields
 ], encargadoController.delete);
 
 // Exportamos
