@@ -91,7 +91,7 @@ Nueva https://fonts.googleapis.com/css2?family=Paytone+One&family=Russo+One&disp
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-  --blue: #324cdd;
+  /* --blue: #324cdd;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
@@ -102,16 +102,8 @@ Nueva https://fonts.googleapis.com/css2?family=Paytone+One&family=Russo+One&disp
   --teal: #00A9A2;
   --cyan: #11cdef;
   --white: #fff;
-  --gray: #f7fafc;
+  --gray: #f7fafc; */
   --gray-dark: #333333;
-  --primary: #7571f9;
-  --secondary: #9097c4;
-  --success: #6fd96f;
-  --info: #4d7cff;
-  --warning: #f29d56;
-  --danger: #ff5e5e;
-  --light: #f8f9fa;
-  --dark: #333333;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -22279,7 +22271,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 .icon_w_100 {
   width: 100px;
-} 
+}
 
 .acdemy_h1 {
   color: #7571F9;
@@ -22377,8 +22369,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   border-radius: 5px;
   color: rgb(51, 51, 51);
   display: inline;
-  max-height: 620px;
-  max-width: 600px;
+  max-height: 80vh;
+  max-width: 800px;
   outline: none;
   padding: 10px;
   width: 100%;
@@ -22398,13 +22390,13 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 /* date picker style */
 
 
-.react-datepicker__month-container {
+/* .react-datepicker__month-container {
   width: 75%;
 }
 
 .react-datepicker__time-container {
   width: 25%;
-}
+} */
 
 
 
@@ -22514,25 +22506,59 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 .hover_btnMenu {
   transition: all 0.1s ease;
-} 
-.hover_btnMenu:hover>i { 
+}
+
+.hover_btnMenu:hover>i {
   color: black;
 }
-.hover_btnMenu:hover { 
-  transition: all 0.1s ease; 
-  background-color:rgba(53,66,148,0.3);
-} 
-.hover_h_white { 
+
+.hover_btnMenu:hover {
+  transition: all 0.1s ease;
+  background-color: rgba(53, 66, 148, 0.3);
+}
+
+.hover_h_white {
   color: black;
 }
-.hover_h_white:hover { 
-  transition: all 0.1s ease; 
-  background-color:rgba(53,66,148,0.3);
-}  
-.hover_h_white:hover h3 { 
+
+.hover_h_white:hover {
+  transition: all 0.1s ease;
+  background-color: rgba(53, 66, 148, 0.3);
+}
+
+.hover_h_white:hover h3 {
   color: white;
-}  
-.hover_h_white:hover h5 { 
+}
+
+.hover_h_white:hover h5 {
   color: white;
-} 
+}
+
 /* FIN HOVER */
+
+
+/* input  style */
+.inputFileHidden {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputFileStyle {
+  color: rgb(100, 100, 100);
+  padding: 10px;
+  border: 1px solid rgb(150, 150, 150);
+  border-radius: 0.5rem;
+  /* background-color: rgb(150, 150, 150); */
+  transition: all 0.2s ease;
+}
+
+.inputFileStyle:hover {
+  transition: all 0.2s ease;
+  color: white;
+  background-color: rgb(100, 100, 100);
+  cursor: pointer;
+}

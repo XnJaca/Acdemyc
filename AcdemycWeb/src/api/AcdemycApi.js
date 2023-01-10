@@ -10,11 +10,12 @@ const acdemycApi = axios.create({//se cambia la variable para que sea local
 
 //? Configurar interceptores
 acdemycApi.interceptors.request.use(config => {
-
+    
     config.headers = {
         ...config.headers,
-        // 'x-token': localStorage.getItem('token'),
-        'fk_institucion': localStorage.getItem('fk_institucion')
+        'x-token': localStorage.getItem('token'),
+        'fk_institucion': localStorage.getItem('fk_institucion'),
+        'rol_admin': localStorage.getItem('rol_admin'),
     }
     return config;
 })

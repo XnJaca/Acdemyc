@@ -1,0 +1,7 @@
+POST https://acdemyc-production.up.railway.app/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "cedula": "0000000000",
+    "clave": "123456"
+}

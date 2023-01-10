@@ -6,6 +6,10 @@ export const EstudiantesPage = () => {
 
     const id = 1;
 
+    //! Si un encargado pone en la ruta un id random le saldria otro estudiante, entonces
+    //! cada vez que se obtenga el estudiatne por id que verifique el padre de familia
+    //! sea el mismo, osea, esten sincronizados
+
     const btnEstudiante = [
         {
             to: `/cursos/${id}`,
@@ -92,8 +96,8 @@ export const EstudiantesPage = () => {
                             <div className="card-body">
                                 <h3 className="card-title text-white"></h3>
                                 <div className="d-inline-block">
-                                    <h2 className="text-white">{'Ausencias'}</h2>
-                                    <p className="text-white mb-0">Listado de Ausencias</p>
+                                    <h2 className="text-white">{'Asistencia'}</h2>
+                                    <p className="text-white mb-0">Listado de Asistencia</p>
                                 </div>
                                 <span className="float-right display-5 opacity-5"> <img
                                     // className='rounded-circle'

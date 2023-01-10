@@ -20,7 +20,7 @@ import {
 
 export const AppRouter = () => {
 
-    const { status, user, checkAuthToken } = useAuthStore()
+    const { status, user,tipoUsuario, checkAuthToken } = useAuthStore()
 
     //* Se verifica si tiene token valido si no hay token se cierra la sesion
     useEffect(() => {
@@ -66,7 +66,7 @@ export const AppRouter = () => {
                                     <Route index element={<HomePage />} />
                                     <Route path='perfil' element={<PerfilPage />} />
                                     {
-                                        (user.rol_administrador === 'DIRECTOR') && (
+                                        (tipoUsuario?.rolAdmin === 'DIRECTOR') && (
                                             <Route path='admin' element={<AdminPage />} />
                                         )
                                     }

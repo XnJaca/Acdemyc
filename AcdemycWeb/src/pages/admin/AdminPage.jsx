@@ -145,13 +145,13 @@ export const AdminPage = () => {
 
   const onGetData = async () => {
     Promise.all([
-      onGetDataValue({ url: 'roladministrador', tipo: 'rol_administrador' }),
+      // onGetDataValue({ url: 'roladministrador', tipo: 'rol_administrador' }),
       onGetAllUser({
-        url: 'administrador',
+        url: 'administradores?estado=1',
         tipo: "administradores"
       }),
     ]).then((values) => {
-      setRoles([{ id: 'TODOS', descripcion: 'TODOS' }, ...values[0] ]);
+      // setRoles([{ id: 'TODOS', descripcion: 'TODOS' }, ...values[0] ]);
     });
   }
 
@@ -242,16 +242,15 @@ export const AdminPage = () => {
       //? o un toast para que sepa que esta cargando
       //? o desactivar los inputs para que no pueda editar nada
 
-      values.fk_rol_administrador = idRolAdministrador(values.rol_administrador);
-      delete values.rol_administrador;
+      // values.fk_rol_administrador = idRolAdministrador(values.rol_administrador);
+      // delete values.rol_administrador; 
 
       if (row.original.fk_rol_administrador === values.rol_administrador) {
-        onEditUser({ url: `${'administrador/'}${row.original.id}`, dataEdit: values, tipo: "id", delete: true });
+        onEditUser({ url: `${'administradores/'}${row.original.id}`, dataEdit: values, tipo: "id", delete: true });
       } else {
-        onEditUser({ url: `${'administrador/'}${row.original.id}`, dataEdit: values, tipo: "id" });
+        onEditUser({ url: `${'administradores/'}${row.original.id}`, dataEdit: values, tipo: "id" });
       }
-
-
+ 
       exitEditingMode(); //required to exit editing mode and close modal
     }
   };
@@ -417,7 +416,7 @@ export const AdminPage = () => {
         */}
 
       <TablaDatos
-        urlEdit={'administrador/'}
+        urlEdit={'administradores/'}
         columns={columns}
         validationErrors={validationErrors}
         setValidationErrors={setValidationErrors}

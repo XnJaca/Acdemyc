@@ -169,29 +169,27 @@ export const useApiStore = () => {
             //* esto devuelve el usuario editado 
             var dataUpdate = await acdemycApi.put(url, dataEdit).then((val) => {
                 return val.data.result;
-            }); 
-            const { usuario } = dataUpdate;
-
+            });
+            const { usuario, rol_administrador = null, tipo_usuario_x_usuario = null } = dataUpdate;
+            console.log(dataUpdate)
             if (!deleteStore) {
                 //* y actualizamos el dato en el store de redux  
                 let dataUpdate = data.map(value => {
                     if (value.id === usuario.id) {
-                        return { 
+                        return {
                             id: usuario.id,
                             nombre: usuario.nombre,
                             apellidos: usuario.apellidos,
                             cedula: usuario.cedula,
                             email: usuario.email,
                             celular: usuario.celular,
-                            rol_administrador: dataUpdate?.rol_administrador?.descripcion,
-                            fk_rol_administrador: dataUpdate?.rol_administrador?.id,
+                            rol_administrador: rol_administrador?.fk_administrador,
+                            fk_rol_administrador: rol_administrador?.fk_administrador,
                         };
                     } else {
                         return value;
                     }
-                });
-
-                //
+                }); 
                 dispatch(onUpdateData(dataUpdate));
             } else {
                 //* y actualizamos el dato en el store de redux  
@@ -218,6 +216,7 @@ export const useApiStore = () => {
 
         } catch (error) {
             Swal.fire('Error', 'Error al editar', 'error')
+            console.log(error)
             dispatch(onGetData(data));
         }
     }

@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from "react-redux"
 import Swal from "sweetalert2";
 import acdemycApi from "../api/acdemycApi";
-import { onCheking, onLogin, onLogout,onFirstLogin } from "../store";
+import { onCheking, onLogin, onLogout, onFirstLogin } from "../store";
 
 export const useAuthStore = () => {
 
-    const { status, user, errorMessage,tipoUsuario } = useSelector(state => state.auth);
+    const { status, user, errorMessage, tipoUsuario } = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
 
     //! First es de prueba ya que no se hace llamado hacia la api
-    const startLogin = async ({ cedula , clave, first=false }) => {
+    const startLogin = async ({ cedula, clave, first = false }) => {
         //Para un loading
         dispatch(onCheking());
 
@@ -20,26 +20,17 @@ export const useAuthStore = () => {
         try {
             //*Se hace llamado a la api se obtienen los datos del usuario y token
             //https://acdemyc-production.up.railway.app/api/auth/login 
-            cedula = '134000120210' //Administrador  134000120210 // otro  321654987 // esutdiante  123456789
+            cedula = '0000000000' //Administrador  0000000000 // otro  321654987 // esutdiante  123456789
             clave = '123456'
-            const {data} = await acdemycApi.post('/auth/login', {cedula, clave}); 
-            console.log(data.tipo_usuario)
-            console.log(data.token)
-            console.log(data.usuario)
-            //! por mientras              new123456
-
+            const {usuario,token,tipo_usuario, rol_admin = null} = await acdemycApi.post('/login', { cedula, clave })
+            .then( (val)=> {
+                return { ...val.data.result, token: val.data.token }
+            })
+            .catch((error) => { Swal.fire('error', 'Error al iniciar sesion', 'error') });
+            
+            console.log(rol_admin)
+            //! por mientras new-123456 
             var isNewUser = false;
-            // var user = {cedula: '208300857',email:'paco@gmail.com', uid: '1',typeUser: 'admin'}
-            // data.users.forEach(usuario => { 
-
-            //     if(usuario.Email === email && usuario.Contrasenna === password){
-            //         if(usuario.Contrasenna.includes('new-')){
-            //             isNewUser = true; 
-            //         }
-            //         user = {cedula: usuario.Cedula, email: usuario.Email, uid: usuario.ID}
-            //     } 
-            // });
-            //! por mientras
 
             //? Si el usuario no existe se muestra un mensaje de error
             // Swal('Error', 'Usuario o contraseña incorrectos', 'error'); 
@@ -47,23 +38,25 @@ export const useAuthStore = () => {
             //* Disparamos ejecutamos el llamado a la base de datos obtenemos la respuesta
             //* Si es correcta y la contrase;a inclute 'new-' es primera sesion 
             //* y lo tiramos a cambiar contrase;a de una
-            
-             
-            if(isNewUser){ //and data trae datos
-               //*Si fuera primera sesion se ejecuta el 
-                dispatch(onFirstLogin({...user})); 
-            }else{
-                dispatch(onLogin({user:data.usuario, tipoUsuario:data.tipo_usuario}))
+
+
+            if (isNewUser) { //and data trae datos
+                //*Si fuera primera sesion se ejecuta el 
+                dispatch(onFirstLogin({ ...user }));
+            } else {
+                dispatch(onLogin({ user: usuario, tipoUsuario: {...tipo_usuario, rolAdmin: rol_admin?.descripcion}}))
             }
-            localStorage.setItem('token', data.token)
+
+            localStorage.setItem('token', token)
             localStorage.setItem('token-init-date', new Date().getTime());
-            localStorage.setItem('fk_institucion', data.usuario.fk_institucion);
+            localStorage.setItem('fk_institucion', usuario.fk_institucion);
+            localStorage.setItem('rol_admin', tipo_usuario.id);
 
             //colocar la informacion del usuario en el local storage porque no se puede colocar
             //directamente en el api porque se inicializa primero el api antes que el auth store
             //pero al peticion es antes
-            localStorage.setItem('uid', data.usuario.id);
-            
+            localStorage.setItem('uid', usuario.id);
+
             //Esto hace el dispatch de login
             //dispatch(onLogin({ name: 'Paco', uid: '1' }))
         } catch (error) {
@@ -80,27 +73,27 @@ export const useAuthStore = () => {
     //* Caso contrario se mantendria diferente
     //* esto se puede saber con el status actual del estudiante, si es 'firstLogin' o 'authenticated'
     const startChangePassword = async ({ password }) => {
-         
+
         //* Busco el usuario en la base de datos y le cambio la contraseña
         //* En la base de datos se codifica la contraseña
         console.log('Cambio de contrase;a')
         //* Ejecutaria el llamado a la api, colocandole los valores nuevos
- 
+
         //* Despues verifica si es primera sesion de usuario
-        if(status === 'firstLogin'){
-            
+        if (status === 'firstLogin') {
+
             //! Si fuera primera sesion debemos en la base de datos decir que ya se inicio sesion
 
             //*Si fuera primera sesion obtenemos le id 
-            dispatch(onLogin({ cedula: user.cedula, email:user.email, uid: user.uid, typeUser: user.typeUser}))
+            dispatch(onLogin({ cedula: user.cedula, email: user.email, uid: user.uid, typeUser: user.typeUser }))
 
             //todo: Se haria un dispatch de login
-        }else{
+        } else {
             //todo: Se haria un dispatch de cambio de contrase'a
         }
-         
-        
-        
+
+
+
 
     }
 
@@ -110,7 +103,7 @@ export const useAuthStore = () => {
             //const { data } = await calendarApi.post('/auth/new', { name, email, password });
             localStorage.setItem('token', 'data.token')
             localStorage.setItem('token-init-date', new Date().getTime());
-  
+
             //colocar la informacion del usuario en el local storage porque no se puede colocar
             //directamente en el api porque se inicializa primero el api antes que el auth store
             //pero al peticion es antes
@@ -132,7 +125,7 @@ export const useAuthStore = () => {
     const checkAuthToken = async () => {
         const token = localStorage.getItem('token');
 
-        if (!token) return dispatch(onLogout()); 
+        if (!token) return dispatch(onLogout());
         try {
 
             // cedula = '134000120210' //Administrador  134000120210 // otro  321654987
@@ -141,15 +134,20 @@ export const useAuthStore = () => {
 
             // dispatch(onLogin({user:data.usuario, tipoUsuario:data.tipo_usuario}))
             // return
-            
+
             //const { data } = await acdemycApi.get('/auth/renew');
 
-            const cedula = '134000120210' //Administrador  134000120210 // otro  321654987 // Estudiante 123456789
-            const clave = '123456' 
-            const {data} = await acdemycApi.post('/auth/login', {cedula, clave});
-            dispatch(onLogin({user:data.usuario, tipoUsuario:data.tipo_usuario}))
-            
-            localStorage.setItem('token', data.token)
+            const cedula = '0000000000' //Administrador  134000120210 // otro  321654987 // Estudiante 123456789
+            const clave = '123456'
+            const {usuario,token,tipo_usuario, rol_admin = null} = await acdemycApi.post('/login', { cedula, clave })
+            .then( (val)=> {
+                return { ...val.data.result, token: val.data.token }
+            })
+            .catch((error) => { Swal.fire('error', 'Error al iniciar sesion', 'error')});
+
+            dispatch(onLogin({ user: usuario, tipoUsuario: {...tipo_usuario, rolAdmin: rol_admin?.descripcion}}))
+
+            localStorage.setItem('token', token)
             localStorage.setItem('token-init-date', new Date().getTime());
 
         } catch (error) {

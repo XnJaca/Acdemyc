@@ -16,15 +16,17 @@ export const InfoUserContent = () => {
   //
   const totalCounts = async () => {
     Promise.all([
-      onGetDataValue({ url: '/administrador', tipo: 'total' }),
-      onGetDataValue({ url: '/estudiantes', tipo: 'total' })
+      onGetDataValue({ url: '/administradores?estado=1', tipo: 'administradores' }),
+      //onGetDataValue({ url: '/estudiantes', tipo: 'estudiantes' })
     ]).then(values => {
-      setTotalAdmins(values[0]);
-      setTotalEstudiantes(values[1]);
+      setTotalAdmins(values[0].length);
+      //setTotalEstudiantes(values[1]);
     }).catch(err => {
       Swal.fire('Error', "Ocurrio un error, por favor hable con el administrador", 'error');
     });
   }
+
+  console.log(totalAdmins)
 
   useEffect(() => {
     totalCounts();
@@ -49,7 +51,7 @@ export const InfoUserContent = () => {
       <div className="row">
 
         {
-          tipoUsuario.rol_administrador === 'DIRECTOR' && (
+          tipoUsuario.rolAdmin === 'DIRECTOR' && (
             <div className="col-lg-3 col-sm-6">
               <Link to={"admin"} className="card gradient-1 w-100">
                 <div className="card-body">
@@ -81,7 +83,7 @@ export const InfoUserContent = () => {
           </Link>
         </div>
         <div className="col-lg-3 col-sm-6">
-          <div className="card gradient-3">
+          <Link to={'estudiantes'} className="card gradient-3">
             <div className="card-body">
               <h3 className="card-title text-white">Estudiantes</h3>
               <div className="d-inline-block">
@@ -90,7 +92,7 @@ export const InfoUserContent = () => {
               </div>
               <span className="float-right display-5 opacity-5"><i className="fa fa-solid fa-graduation-cap"></i></span>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-lg-3 col-sm-6">
           <div className="card gradient-4">

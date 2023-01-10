@@ -35,7 +35,7 @@ export const SideBar = () => {
             <div className="offcanvas offcanvas-start text-bg-light" tabIndex={-1} id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                 <div className="offcanvas-header">
                     <div className='d-flex align-items-center'>
-                        <img src="https://i.ytimg.com/vi/3TmYBWOKtLo/maxresdefault.jpg" height="40" width="40" alt="Acdemyc" />
+                        <img src="/icons/500x500-bg-transparent.png" height="40" width="40" alt="Acdemyc" />
                         <h5 className="offcanvas-title ml-2 fs_1_2rem" id="offcanvasDarkNavbarLabel">Acdemyc</h5>
                     </div>
                     <button type="button" className="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>

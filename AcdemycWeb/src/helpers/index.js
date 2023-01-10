@@ -1,7 +1,10 @@
-export * from "./convertEventsToDate"; 
-export * from "./getMessages"; 
-export * from "./calendarLocalizer";
-export * from "./tableSpanish";
-export * from "./validationTextField";
-export * from "./dateToString";
+export * from "./calendario/convertEventsToDate"; 
+export * from "./calendario/getMessages"; 
+export * from "./calendario/calendarLocalizer";
+export * from "./calendario/dateToString";
+
+export * from "./tabla/tableSpanish";
+export * from "./tabla/validationTextField";
+
+export * from "./excel/lectorExcel";
    

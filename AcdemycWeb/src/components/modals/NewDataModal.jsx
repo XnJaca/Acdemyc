@@ -230,6 +230,7 @@ export const NewDataModal = ({ columns = [], modalOpen = false, onClose, onSubmi
                                     helperText={validationErrors[column.accessorKey]}
                                     name={column.accessorKey}
                                     type={column.type}
+                                    
                                     maxLength={column.maxLength ? column.maxLength : 150}
                                     multiline={!!column.multiline}
                                     maxRows={column.maxRows ? column.maxRows : 0}
