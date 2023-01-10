@@ -26,7 +26,7 @@ estudianteController.save = async (req = request, res = response) => {
 
             //Ingresamos a la tabla de tipo_usuario_x_usuario
             const tipo_usuario_x_usuario = await TipoUsuarioxUsuario.create({ fk_usuario: usuario.id, fk_tipo_usuario: req.body.tipo_usuario }, { transaction: t });
-            
+
             //Retornamos
             return {
                 usuario,
@@ -106,7 +106,7 @@ estudianteController.getAll = async (req = request, res = response) => {
         });
     }
     //Enviamos los usuarios
-    res.json({estudiantes});
+    res.json({ estudiantes });
 }
 
 //Creamos el metodo para buscar por id
@@ -169,9 +169,10 @@ estudianteController.update = async (req = request, res = response) => {
         // Buscamos el estudiante actualizado sin la clave
         const result = await Estudiante.findOne({
             where: { fk_usuario: id },
+            attributes: { exclude: ['fk_usuario'] },
             include: [{
                 model: Usuario,
-                attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
+                attributes: ['id', 'nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
                 where: { fk_institucion: fk_institucion },
             },
             {

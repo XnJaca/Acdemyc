@@ -193,10 +193,12 @@ administradorController.update = async (req = request, res = response) => {
             where: {
                 fk_usuario: id
             },
+            // Excluir el fk_usuario
+            attributes: { exclude: ['fk_usuario'] },
             include: [
                 {
                     model: Usuario,
-                    attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'fk_institucion', 'estado'],
+                    attributes: ['id','nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'fk_institucion', 'estado'],
                     where: { fk_institucion: fk_institucion }
                 },
                 {
