@@ -27,7 +27,7 @@ loginController.login = async (req = request, res = response) => {
         let rol_admin;
         if (tipo_usuario.descripcion.toLowerCase() == 'administrador') {
             rol_admin = await RolAdmin.findOne({ where: { fk_administrador: usuario.id } });
-            rol_admin = await RolAdmin.findByPk(rol_admin.fk_institucion);
+            rol_admin = await RolInstitucion.findByPk(rol_admin.fk_institucion);
         }
 
         // Verificar el estado del usuario

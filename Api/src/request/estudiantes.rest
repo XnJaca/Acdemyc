@@ -54,7 +54,7 @@ fk_institucion: 1
 x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
 
 {
-    "estado": 1
+    "nombre": "Admin1"
 }
 
 ###

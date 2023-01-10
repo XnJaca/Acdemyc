@@ -2,14 +2,16 @@
 #   Peticion get para obtener todos los administradors.
 #   Debe enviarse por el HEADER el fk_institucion al que queremos consultar los administradors.
 #   Se debe especificar en por parametro el estado ( 0 => Inactivo(Borrado) o 1 => ACTIVO ) que queremos obtener.
-GET http://localhost:8080/api/administradores?estado=0 HTTP/1.1
+GET http://localhost:8080/api/administradores?estado=1 HTTP/1.1
 fk_institucion: 1
+x-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
 
 ###
 
 # Peticion get para obtener un administrador.
 GET http://localhost:8080/api/administradores?id=4&estado=1 HTTP/1.1
 fk_institucion: 1
+x-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
 
 ###
 
@@ -21,6 +23,7 @@ fk_institucion: 1
 POST http://localhost:8080/api/administradores HTTP/1.1 
 Content-Type: application/json
 fk_institucion: 1
+x-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
 
 {
     "cedula": "0000000000",
@@ -48,10 +51,10 @@ fk_institucion: 1
 PUT http://localhost:8080/api/administradores/4 HTTP/1.1
 Content-Type: application/json
 fk_institucion: 1
-rol_admin: 0
+x-token:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
 
 {
-    "estado": 1
+    "nombre": "Admin1"
 }
 
 ###
