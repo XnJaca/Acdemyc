@@ -1,0 +1,56 @@
+
+# Peticion get para obtener todos los usuarios.
+GET http://localhost:8080/api/usuarios HTTP/1.1
+
+###
+
+# Peticion get para obtener un usuario.
+GET http://localhost:8080/api/usuarios?id=4 HTTP/1.1
+
+###
+
+# Peticion post para crear un usuario.
+# Parametros opcionales
+# imagen
+# estado: 0 o 1
+POST http://localhost:8080/api/usuarios HTTP/1.1 
+Content-Type: application/json
+
+{
+    "cedula": "0000000000",
+    "nombre": "Juan",
+    "apellidos": "Perez",
+    "fecha_nacimiento": "2001-08-09",
+    "genero": "M",
+    "email": "prueb@gmail.com",
+    "clave": "123456",
+    "telefono": "",
+    "celular": "00000000",
+    "direccion": "Calle 1 # 1 - 1",
+    "fk_institucion": "1"
+}
+
+###
+
+# Peticion put para actualizar un usuario.
+# Se le envian los datos que se quieren modificar.
+# Recomendable enviar todo el objeto.
+# PUT http://localhost:8080/api/usuarios/id_a_modificar
+# Se le envia por el HEADER el tipo de usuario que hace la peticion.
+PUT http://localhost:8080/api/usuarios/12 HTTP/1.1
+Content-Type: application/json
+tipo_usuario: 0
+
+{
+    "nombre": "Juan"
+}
+
+###
+
+# Peticion delete para eliminar un usuario.
+# DELETE http://localhost:8080/api/usuarios/id_a_eliminar
+# Se le envia por el HEADER el tipo de usuario que hace la peticion.
+DELETE http://localhost:8080/api/usuarios/6 HTTP/1.1
+Content-Type: application/json
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMxOTMyNywiZXhwIjoxNjczMzMzNzI3fQ.iQgwaOT33tfTQCVX8e4gdj2ypS-8TDESVa0z6eZzA5I
+tipo_usuario: 0
