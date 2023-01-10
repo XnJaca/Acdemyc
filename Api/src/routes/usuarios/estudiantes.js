@@ -3,7 +3,7 @@ const { Router } = require('express');
 // Require check
 const { check } = require('express-validator');
 // Require validators
-const { validateFields, isAdminRole } = require('../../middlewares/')
+const { validateFields, isAdminRole } = require('../../middlewares')
 // Require validators
 const {existUserByCedula,existUserByCorreo,existUserById,isEstudiante, isAdmin, existEstudiante } = require('../../helpers/validators')
 
