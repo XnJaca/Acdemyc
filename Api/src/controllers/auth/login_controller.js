@@ -41,7 +41,7 @@ loginController.login = async (req = request, res = response) => {
         const comparePassword = await comparar(clave + "", usuario.clave);
         if (!comparePassword) {
             return res.status(400).json({
-                msg: 'La clave es incorrecta.'
+                msg: 'Usuario o Clave incorrecta. Verifique los datos.'
             });
         }
 
