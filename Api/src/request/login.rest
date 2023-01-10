@@ -3,5 +3,5 @@ Content-Type: application/json
 
 {
     "cedula": "0000000000",
-    "clave": "123456"
+    "clave": "12345"
 }
