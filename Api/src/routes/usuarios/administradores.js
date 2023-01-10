@@ -57,7 +57,7 @@ router.put('/:id', [
     isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
-    check('id', 'El encargado que intenta modificar no existe.').custom(existAdmin),
+    check('id', 'El administrador que intenta modificar no existe.').custom(existAdmin),
     check('fk_institucion', 'El fk_institucion es obligatorio').not().isEmpty(),
     validateFields
 ], administradorController.update);

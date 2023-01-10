@@ -65,7 +65,7 @@ router.delete('/:id', [
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('fk_institucion', 'El fk_institucion es obligatorio.').not().isEmpty(),
-    check('tipo_usuario').custom(isAdmin),
+    check('tipo_usuario').custom(existEstudiante),
     validateFields
 ], estudianteController.delete);
 

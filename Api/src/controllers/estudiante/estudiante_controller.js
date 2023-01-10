@@ -126,7 +126,6 @@ estudianteController.getById = async (req = request, res = response) => {
     });
 
     if (estudiante == null) {
-
         return res.status(400).json({
             msg: 'No existe un estudiante con el id ' + req.query.id
         });
