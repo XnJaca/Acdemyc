@@ -1,0 +1,9 @@
+/* Fuentes */
+
+/** Fuente Uni Sans Heavy */
+@font-face {
+    font-family: UniSans;
+    src: url('./Uni_Sans_Heavy.otf');
+    font-style: normal;
+    font-weight: normal;
+};
