@@ -8,6 +8,8 @@ const EncargadoFactory = require('./usuarios/encargado/encargado_model');
 const EncargadoXEstudianteFactory = require('./usuarios/encargado/encargado_x_estudiante_model');
 const RolAdminFactory = require('./rol/rol_administrador_model');
 const RolInstitucionFactory = require('./rol/rol_institucion_model');
+const InstitucionFactory = require('./institucion/institucion_model');
+const TipoInstitucionFactory = require('./institucion/tipo_institucion_model');
 
 module.exports = {
     AdministradorFactory,
@@ -19,7 +21,9 @@ module.exports = {
     EncargadoFactory,
     EncargadoXEstudianteFactory,
     RolInstitucionFactory,
-    RolAdminFactory
+    RolAdminFactory,
+    InstitucionFactory,
+    TipoInstitucionFactory,
 }
 
 // Si añade un modelo, debe sincronizarlo en el archivo de '../config/models_sync'

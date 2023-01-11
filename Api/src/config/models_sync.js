@@ -14,7 +14,9 @@ const {
     ProfesorFactory,
     EncargadoFactory, EncargadoXEstudianteFactory,
     RolAdminFactory,
-    RolInstitucionFactory
+    RolInstitucionFactory,
+    InstitucionFactory,
+    TipoInstitucionFactory,
 } = require('../models/models');
 
 
@@ -29,6 +31,8 @@ const Profesor = ProfesorFactory(sequelize, DataTypes);
 const EncargadoXEstudiante = EncargadoXEstudianteFactory(sequelize, DataTypes);
 const RolAdmin = RolAdminFactory(sequelize, DataTypes);
 const RolInstitucion = RolInstitucionFactory(sequelize, DataTypes);
+const Institucion = InstitucionFactory(sequelize, DataTypes);
+const TipoInstitucion = TipoInstitucionFactory(sequelize, DataTypes);
 
 
 //Relacion entre Administrador y Usuario
@@ -46,7 +50,6 @@ Profesor.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
 // Relacion entre encargado y Usuario
 Usuario.hasOne(Encargado, { foreignKey: 'fk_usuario' });
 Encargado.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
-
 
 //Relacion entre administrador y tipo_usuario_x_usuario
 TipoUsuarioxUsuario.belongsTo(Administrador, { foreignKey: 'fk_usuario' });
@@ -73,8 +76,8 @@ Usuario.hasMany(TipoUsuarioxUsuario, { foreignKey: 'fk_usuario' });
 TipoUsuarioxUsuario.belongsTo(Usuario, { foreignKey: 'fk_usuario' });
 
 // Relacion entre Institucion y Tipo Institucion
-// TipoInstitucion.hasOne(Institucion, { foreignKey: 'fk_tipo_institucion' });
-// Institucion.belongsTo(TipoInstitucion, { foreignKey: 'fk_tipo_institucion' });
+TipoInstitucion.hasOne(Institucion, { foreignKey: 'fk_tipo_institucion' });
+Institucion.belongsTo(TipoInstitucion, { foreignKey: 'fk_tipo_institucion' });
 
 // Relacion entre administrador y Rol Administrador
 Administrador.hasOne(RolAdmin, { foreignKey: 'fk_administrador' });

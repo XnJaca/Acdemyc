@@ -8,7 +8,7 @@ const { validateFields, validarJWT, isAdminRole } = require('../../middlewares/'
 const { existUserById, existUserByCedula, existUserByCorreo, isAdmin, existAdmin, existRolInstitucion } = require('../../helpers/validators')
 
 // Require controller
-const { administradorController } = require('../../controllers/administrador/administrador_controller')
+const { administradorController } = require('../../controllers')
 
 
 // Create router
