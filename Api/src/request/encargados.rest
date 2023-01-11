@@ -2,14 +2,18 @@
 #   Peticion get para obtener todos los encargados.
 #   Debe enviarse por el HEADER el fk_institucion al que queremos consultar los encargados.
 #   Se debe especificar en por parametro el estado ( 0 => Inactivo(Borrado) o 1 => ACTIVO ) que queremos obtener.
+# Se debe enviar en el header el token del usuario logueado.
 GET http://localhost:8080/api/encargados?estado=1 HTTP/1.1
 fk_institucion: 1
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
+
 
 ###
 
 # Peticion get para obtener un encargado.
-GET http://localhost:8080/api/encargados?id=4&estado=1 HTTP/1.1
+GET http://localhost:8080/api/encargados?id=6&estado=1 HTTP/1.1
 fk_institucion: 1
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
 
 ###
 
@@ -17,11 +21,12 @@ fk_institucion: 1
 # Parametros opcionales
 # imagen
 # estado: 0 o 1
-# Se debe enviar por el header el rol_admin para saber que el que esta haciendo la consulta es un administrador.
+# Se debe enviar en el header el token del usuario logueado.
 POST http://localhost:8080/api/encargados HTTP/1.1 
 Content-Type: application/json
 fk_institucion: 1
-rol_admin: 0
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
+
 
 {
     "cedula": "0000000100",
@@ -45,11 +50,12 @@ rol_admin: 0
 # Se le envian los datos que se quieren modificar.
 # Recomendable enviar todo el objeto.
 # PUT http://localhost:8080/api/usuarios/id_a_modificar
-# Se le envia por el HEADER el rol_admin para saber que el que esta haciendo la consulta es un administrador.
+# Se debe enviar en el header el token del usuario logueado.
 PUT http://localhost:8080/api/encargados/19 HTTP/1.1
 Content-Type: application/json
 fk_institucion: 1
-rol_admin: 0
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
+
 
 {
     "estado": 1
@@ -59,8 +65,9 @@ rol_admin: 0
 
 # Peticion delete para eliminar un usuario.
 # DELETE http://localhost:8080/api/usuarios/id_a_eliminar
-# Se le envia por el HEADER el tipo de usuario que hace la peticion.
+# Se debe enviar en el header el token del usuario logueado.
 DELETE http://localhost:8080/api/encargados/4 HTTP/1.1
 Content-Type: application/json
 fk_institucion: 1
-tipo_usuario: 0
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQsImlhdCI6MTY3MzMyNDM3MSwiZXhwIjoxNjczMzM4NzcxfQ.6zJDuf2uaqzedJlavDpC9hRU29mtd8jE3TBG0eGfEKQ
+

@@ -26,7 +26,7 @@ estudianteController.save = async (req = request, res = response) => {
 
             //Ingresamos a la tabla de tipo_usuario_x_usuario
             const tipo_usuario_x_usuario = await TipoUsuarioxUsuario.create({ fk_usuario: usuario.id, fk_tipo_usuario: req.body.tipo_usuario }, { transaction: t });
-            
+
             //Retornamos
             return {
                 usuario,
@@ -106,7 +106,7 @@ estudianteController.getAll = async (req = request, res = response) => {
         });
     }
     //Enviamos los usuarios
-    res.json(estudiantes);
+    res.json({ estudiantes });
 }
 
 //Creamos el metodo para buscar por id
@@ -126,7 +126,6 @@ estudianteController.getById = async (req = request, res = response) => {
     });
 
     if (estudiante == null) {
-
         return res.status(400).json({
             msg: 'No existe un estudiante con el id ' + req.query.id
         });
@@ -168,11 +167,12 @@ estudianteController.update = async (req = request, res = response) => {
         });
 
         // Buscamos el estudiante actualizado sin la clave
-        const estudianteActualizado = await Estudiante.findOne({
+        const result = await Estudiante.findOne({
             where: { fk_usuario: id },
+            attributes: { exclude: ['fk_usuario'] },
             include: [{
                 model: Usuario,
-                attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
+                attributes: ['id', 'nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
                 where: { fk_institucion: fk_institucion },
             },
             {
@@ -183,7 +183,7 @@ estudianteController.update = async (req = request, res = response) => {
 
         //Enviamos la respuesta.
         res.json({
-            estudianteActualizado
+            result
         });
 
     } catch (error) {
@@ -218,23 +218,9 @@ estudianteController.delete = async (req = request, res = response) => {
             );
         });
 
-        // Buscamos el usuario estudiante actualizado
-        const estudianteActualizado = await Estudiante.findOne({
-            where: { fk_usuario: id },
-            include: [{
-                model: Usuario,
-                attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'estado', 'fk_institucion'],
-                where: { fk_institucion: fk_institucion },
-            },
-            {
-                model: TipoUsuarioxUsuario,
-                attributes: ['fk_tipo_usuario']
-            }]
-        });
-
         //Enviamos la respuesta.
         res.json({
-            estudianteActualizado
+            msg: 'Usuario eliminado correctamente'
         });
 
     } catch (error) {

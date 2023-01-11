@@ -2,22 +2,23 @@
 const { Router } = require('express');
 // Require check
 const { check } = require('express-validator');
-// Require middleware
-const { validateFields, validarRoles } = require('../../middlewares/middlewares');
 
-// Require validate-jwt
-const { validarJWT } = require('../../middlewares/validate_jwt');
+// Require middlewares
+const { validateFields, validarJWT, isAdminRole } = require('../../middlewares/')
+
 // Require validators
-const { existUserByCedula, existUserByCorreo,existUserById, isAdmin } = require('../../helpers/validators')
+const { existUserByCedula, existUserByCorreo, existUserById, isAdmin } = require('../../helpers/validators')
 
 // Require controller
-const {usuarioController} = require('../../controllers/usuario/usuario_controller')
+const { usuarioController } = require('../../controllers/usuario/usuario_controller')
 
 // Create router
 const router = Router();
 
 // Create routes
 router.post('/', [
+    validarJWT,
+    isAdminRole,
     check('cedula', 'La cedula es obligatoria').not().isEmpty(),
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('apellidos', 'Los apellidos son obligatorios').not().isEmpty(),
@@ -32,27 +33,30 @@ router.post('/', [
     check('celular', 'El celular es obligatorio').not().isEmpty(),
     check('direccion', 'La direccion es obligatoria').not().isEmpty(),
     check('fk_institucion', 'La institucion es obligatoria').not().isEmpty(),
-    validateFields.validateFields
+    validateFields
 ], usuarioController.save);
 
-router.get('/', usuarioController.getAll);
+router.get('/', [
+], usuarioController.getAll);
 
 
 router.put('/:id', [
+    validarJWT,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('tipo_usuario', 'Especifique el tipo de usuario que hace la consulta.').not().isEmpty(),
     check('tipo_usuario').custom(isAdmin),
-    validateFields.validateFields
+    validateFields
 ], usuarioController.update);
 
 router.delete('/:id', [
-    validarRoles.isAdminRole,
     validarJWT,
+    isAdminRole,
     check('id', 'El id es obligatorio').not().isEmpty(),
     check('id').custom(existUserById),
     check('tipo_usuario').custom(isAdmin),
-    validateFields.validateFields
+    validateFields
 ], usuarioController.delete);
 
 // Export router

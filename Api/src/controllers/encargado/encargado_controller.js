@@ -163,7 +163,7 @@ encargadoController.update = async (req = request, res = response) => {
             req.body.clave = await encriptar(req.body.clave);
         }
 
-        const result = await sequelize.transaction(async (t) => {
+        await sequelize.transaction(async (t) => {
             //Actualizamos el usuario
             await Usuario.update(req.body,
                 { where: { id: id, fk_institucion: fk_institucion }, transaction: t });
@@ -180,14 +180,15 @@ encargadoController.update = async (req = request, res = response) => {
         });
 
         // Buscamos le estudiante actualizado sin la clave
-        const encargado = await Encargado.findOne({
+        const result = await Encargado.findOne({
             where: {
                 fk_usuario: result.id
             },
+            attributes: { exclude: ['fk_usuario'] },
             include: [
                 {
                     model: Usuario,
-                    attributes: ['nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'fk_institucion', 'estado'],
+                    attributes: ['id','nombre', 'apellidos', 'email', 'cedula', 'celular', 'direccion', 'fk_institucion', 'estado'],
                     where: { fk_institucion: fk_institucion }
                 },
                 {
@@ -199,7 +200,7 @@ encargadoController.update = async (req = request, res = response) => {
 
         //Enviamos la respuesta.
         res.json({
-            encargado
+            result
         });
     } catch (error) {
         console.log(error);
@@ -227,9 +228,9 @@ encargadoController.delete = async (req = request, res = response) => {
 
         //Enviamos la respuesta.
         res.json({
-            msg: 'Encargado eliminado'
+            msg: 'Usuario eliminado correctamente'
         });
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
